@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E629C317-FD10-45B9-81B2-7B4A3514EC7D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClothSearch</RootNamespace>
+    <AssemblyName>ClothSearch</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>res\butterfly.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PerstNet35, Version=1.0.3175.31529, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\PerstNet35.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="win\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="win\AddPicWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="win\HomeWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="win\IndeterminateProgressWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="win\ProgressWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="win\MatchAlgorithmWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="win\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="win\HomeWin.xaml.cs">
+      <DependentUpon>HomeWin.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Zju\Dao\IRegisterDao.cs" />
+    <Compile Include="src\Zju\Dao\RegisterDao.cs" />
+    <Compile Include="src\Zju\Domain\RegisterInfo.cs" />
+    <Compile Include="src\Zju\Searcher\ColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\CooccurrenceSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\HLSColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\DaubechiesWaveletSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\GaborSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\HSVAynsColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\HSVColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\PicSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\RGBColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\RGBSeparateColorSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\BaseSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\BaseParam.cs" />
+    <Compile Include="src\Zju\Searcher\IBaseSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\TextParam.cs" />
+    <Compile Include="src\Zju\Searcher\PicParam.cs" />
+    <Compile Include="src\Zju\Searcher\TextSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\TextureSearcher.cs" />
+    <Compile Include="src\Zju\Service\IRegisterService.cs" />
+    <Compile Include="src\Zju\Service\RegisterService.cs" />
+    <Compile Include="src\Zju\Util\RegisterUtil.cs" />
+    <Compile Include="win\AddPicWin.xaml.cs">
+      <DependentUpon>AddPicWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="win\ClothSearchAboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="win\ClothSearchAboutBox.Designer.cs">
+      <DependentUpon>ClothSearchAboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="win\IndeterminateProgressWin.xaml.cs">
+      <DependentUpon>IndeterminateProgressWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="win\ProgressWin.xaml.cs">
+      <DependentUpon>ProgressWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="win\MatchAlgorithmWin.xaml.cs">
+      <DependentUpon>MatchAlgorithmWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\Zju\Dao\ClothDao.cs" />
+    <Compile Include="src\Zju\Dao\DaoHelper.cs" />
+    <Compile Include="src\Zju\Dao\IClothDao.cs" />
+    <Compile Include="src\Zju\Domain\Cloth.cs" />
+    <Compile Include="src\Zju\Domain\ClothRoot.cs" />
+    <Compile Include="src\Zju\Service\ClothLibService.cs" />
+    <Compile Include="src\Zju\Service\ClothSearchService.cs" />
+    <Compile Include="src\Zju\Service\IClothLibService.cs" />
+    <Compile Include="src\Zju\Service\IClothSearchService.cs" />
+    <Compile Include="src\Zju\Util\ClothUtil.cs" />
+    <Compile Include="src\Zju\Util\Constants.cs" />
+    <Compile Include="src\Zju\Util\AlgorithmDesc.cs" />
+    <Compile Include="src\Zju\View\ViewConstants.cs" />
+    <Compile Include="src\Zju\View\ViewHelper.cs" />
+    <Compile Include="src\Zju\Vo\ClothVo.cs" />
+    <EmbeddedResource Include="win\ClothSearchAboutBox.resx">
+      <DependentUpon>ClothSearchAboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Search.cd" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\banner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\about.png" />
+    <Resource Include="res\exportkey.png" />
+    <Resource Include="res\import.png" />
+    <Resource Include="res\importkey.png" />
+    <Resource Include="res\open.png" />
+    <Resource Include="res\seekey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\addpiclogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\importfolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\butterfly.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageMatcher\ImageMatcher.vcproj">
+      <Project>{0C390870-2B41-4661-BEFA-FBCC40037753}</Project>
+      <Name>ImageMatcher</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\configure.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
