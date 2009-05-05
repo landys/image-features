@@ -112,8 +112,6 @@ namespace ClothSearch
 
         private Thread searchThread;*/
 
-        private bool isValid = true;
-
         public HomeWin()
         {
             colorItems = ViewHelper.NewColorItems;
@@ -156,8 +154,6 @@ namespace ClothSearch
             txtModifyName.IsEnabled = false;
 
             //picNames = new List<string>();
-
-            isValid = RegisterUtil.VerifyLogin();
         }
 
         private void btnToolOpen_Click(object sender, RoutedEventArgs e)
@@ -388,11 +384,11 @@ namespace ClothSearch
 
 		private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (!isValid || !RegisterUtil.VerifySearch())
+            /*if (++count >= 1000)
             {
-                MessageBox.Show("系统试用已到期, 请与供应商联系, 谢谢.");
+                MessageBox.Show("系统未注册, 请与供应商联系, 谢谢.");
                 this.Close();
-            }
+            }*/
 
             if (true == rbtnPic.IsChecked)
             {

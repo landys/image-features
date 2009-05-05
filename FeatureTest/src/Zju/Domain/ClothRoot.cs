@@ -26,23 +26,6 @@ namespace Zju.Domain
 
         private FieldIndex colorNumIndex;
 
-        /// <summary>
-        /// Unique cloth Oid to identify a RegisterInfo.
-        /// </summary>
-        private FieldIndex registerInfoOidIndex;
-
-        private FieldIndex registerInfoNameIndex;
-
-        public FieldIndex RegisterInfoOidIndex
-        {
-            get { return registerInfoOidIndex; }
-        }
-
-        public FieldIndex RegisterInfoNameIndex
-        {
-            get { return registerInfoNameIndex; }
-        }
-
         public BitIndex ColorIndex
         {
             get { return colorIndex; }
@@ -88,9 +71,6 @@ namespace Zju.Domain
             patternIndex = storage.CreateFieldIndex(typeof(Cloth), "Pattern", false);
             pathIndex = storage.CreateFieldIndex(typeof(Cloth), "Path", true);
             colorNumIndex = storage.CreateFieldIndex(typeof(Cloth), "ColorNum", false);
-
-            registerInfoOidIndex = storage.CreateFieldIndex(typeof(RegisterInfo), "Oid", true);
-            registerInfoNameIndex = storage.CreateFieldIndex(typeof(RegisterInfo), "Name", true);
         }
     }
 }

@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="面料花型检索系统" Height="755" WindowStartupLocation="CenterScreen" Width="935">
     <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
+        <!--<Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
             <Image Name="banner" Stretch="Fill" Height="77" VerticalAlignment="Top" Source="/ClothSearch;component/res/banner.png"/>
-        </Border>
+        </Border>-->
         <Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
             <ToolBarTray Name="toolBarTray1" VerticalAlignment="Top">
                 <ToolBar Band="1" BandIndex="1">
