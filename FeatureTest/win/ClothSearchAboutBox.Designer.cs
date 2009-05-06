@@ -1,4 +1,4 @@
-﻿namespace ClothSearch
+﻿namespace FeatureTest
 {
     partial class ClothSearchAboutBox
     {

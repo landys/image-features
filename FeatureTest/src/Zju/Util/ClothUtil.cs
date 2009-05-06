@@ -11,7 +11,7 @@ namespace Zju.Util
         private static ImageMatcher imageMatcher;
 
         private static StreamWriter log;
-        private static String logfile = @"E:\projects\ClothSearch\codes\trunk\data\clothlog.txt";
+        private static String logfile = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\clothlog.txt";
 
         static ClothUtil()
         {
@@ -229,10 +229,10 @@ namespace Zju.Util
             }
 
             // color features
-           // if (null == cloth.RGBSeparateColorVector)
-            //{
-                //cloth.RGBSeparateColorVector = ImageMatcherInst.ExtractRGBSeparateColorVector(cloth.Path, 8, SearchConstants.IgnoreColors);
-            //}
+           if (null == cloth.RGBSeparateColorVector)
+           {
+                cloth.RGBSeparateColorVector = ImageMatcherInst.ExtractRGBSeparateColorVector(cloth.Path, 8, SearchConstants.IgnoreColors);
+            }
             if (null == cloth.RGBColorVector)
             {
                 cloth.RGBColorVector = ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
@@ -251,20 +251,20 @@ namespace Zju.Util
                 }
                 cloth.ColorNum = colorNum;
             }
-            //if (null == cloth.HLSColorVector)
-            //{
-                //cloth.HLSColorVector = ImageMatcherInst.ExtractHLSColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
-            //}
+            if (null == cloth.HLSColorVector)
+            {
+                cloth.HLSColorVector = ImageMatcherInst.ExtractHLSColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+            }
             
             // texture features
             if (null == cloth.DaubechiesWaveletVector)
             {
                 cloth.DaubechiesWaveletVector = ImageMatcherInst.ExtractDaubechiesWaveletVector(cloth.Path);
             }
-            //if (null == cloth.CooccurrenceVector)
-            //{
-                //cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
-            //}
+            if (null == cloth.CooccurrenceVector)
+            {
+                cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
+            }
 
             //if (isGabor && null == cloth.GaborVector)
             //{

@@ -10,7 +10,7 @@ using Zju.Service;
 using Zju.Util;
 using Zju.View;
 
-namespace ClothSearch
+namespace FeatureTest
 {
     /// <summary>
     /// Interaction logic for AppPicWin.xaml

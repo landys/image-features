@@ -1,24 +1,27 @@
-﻿<Window x:Class="ClothSearch.MatchAlgorithmWin"
+﻿<Window x:Class="FeatureTest.MatchAlgorithmWin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="选择匹配算法" Height="350" Width="550"
     WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
+        <!--  Style="{StaticResource blueBorder}"-->
+        <Border DockPanel.Dock="Top">
             <Canvas Height="51">
-                <Image Stretch="Fill" Width="48" Height="42" Source="/ClothSearch;component/res/configure.png" Canvas.Left="12" Canvas.Top="5" />
+                <Image Stretch="Fill" Width="48" Height="42" Source="/FeatureTest;component/res/configure.png" Canvas.Left="12" Canvas.Top="5" />
                 <TextBlock Canvas.Left="76" Canvas.Top="10" Height="32" Width="214" TextWrapping="Wrap">
                     选择需要检索的匹配算法查全率,　　　匹配算法查全率不同检索的结果就不同
                 </TextBlock>
             </Canvas>
         </Border>
-        <Border DockPanel.Dock="Bottom" Style="{StaticResource blueBorder}">
+        <!--  Style="{StaticResource blueBorder}"-->
+        <Border DockPanel.Dock="Bottom">
             <Canvas Height="40">
                 <Button Canvas.Left="321" Canvas.Top="9" Height="23" Name="btnOptionSave" Width="51" Click="btnOptionSave_Click">保存</Button>
                 <Button Canvas.Left="414" Canvas.Top="9" Height="23" Name="btnOptionCancel" Width="51" Click="btnOptionCancel_Click">取消</Button>
             </Canvas>
         </Border>
-        <Border Style="{StaticResource blueBorder}">
+        <!--  Style="{StaticResource blueBorder}"-->
+        <Border>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

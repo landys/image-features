@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClothSearch")]
+[assembly: AssemblyTitle("FeatureTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZJU CS")]
-[assembly: AssemblyProduct("ClothSearch")]
+[assembly: AssemblyProduct("FeatureTest")]
 [assembly: AssemblyCopyright("Copyright © ZJU CS 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

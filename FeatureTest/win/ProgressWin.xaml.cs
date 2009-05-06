@@ -3,7 +3,7 @@ using System.Windows;
 using System.Threading;
 using System.ComponentModel;
 
-namespace ClothSearch
+namespace FeatureTest
 {
     /// <summary>
     /// Interaction logic for ProgressWin.xaml

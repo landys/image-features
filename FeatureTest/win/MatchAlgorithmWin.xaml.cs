@@ -2,7 +2,7 @@
 using Zju.Util;
 using System.Windows.Controls;
 
-namespace ClothSearch
+namespace FeatureTest
 {
     /// <summary>
     /// Interaction logic for SearchOptionsWin.xaml

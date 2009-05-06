@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace ClothSearch
+namespace FeatureTest
 {
     /// <summary>
     /// Interaction logic for IndeterminateProgressWin.xaml

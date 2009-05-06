@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClothSearch.Properties
+namespace FeatureTest.Properties
 {
 
 

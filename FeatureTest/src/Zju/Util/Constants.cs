@@ -7,7 +7,7 @@ namespace Zju.Util
 {
     public sealed class DbConstants
     {
-        public const String DataBaseFilePath = "C:/data/cloth.dbs";
+        public const String DataBaseFilePath = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\cloth.dbs";
         public const int PagePoolSize = 48 * 1024 * 1024;
         public const int ComitLimit = 100000;
     }
@@ -30,7 +30,7 @@ namespace Zju.Util
         public static int[] IgnoreColors = { -1 };
 
 
-        public const string LuvFileName = "C:/data/luv.dat";
+        public const string LuvFileName = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\luv.dat";
 
         public const int MAX_IMPORT_THREADS = 100;
     }

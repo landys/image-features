@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 
-namespace ClothSearch
+namespace FeatureTest
 {
     /// <summary>
     /// Interaction logic for App.xaml

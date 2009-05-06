@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClothSearch.ProgressWin"
+﻿<Window x:Class="FeatureTest.ProgressWin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="正在导入图片, 请稍候..." Height="110" Width="315"

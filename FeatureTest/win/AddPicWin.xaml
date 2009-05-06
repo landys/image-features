@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClothSearch.AddPicWin"
+﻿<Window x:Class="FeatureTest.AddPicWin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="新增图片" Height="400" Width="550"
@@ -6,7 +6,7 @@
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
             <Canvas Height="51">
-                <Image Stretch="Fill" Width="48" Height="42" Source="/ClothSearch;component/res/addpiclogo.png" Canvas.Left="12" Canvas.Top="5" />
+                <Image Stretch="Fill" Width="48" Height="42" Source="/FeatureTest;component/res/addpiclogo.png" Canvas.Left="12" Canvas.Top="5" />
                 <Label Canvas.Left="77" Canvas.Top="10" Height="28" Width="170">请填写新增图片的基本信息:</Label>
             </Canvas>
         </Border>

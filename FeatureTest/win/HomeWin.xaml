@@ -1,47 +1,57 @@
-﻿<Window x:Class="ClothSearch.HomeWin"
+﻿<Window x:Class="FeatureTest.HomeWin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="面料花型检索系统" Height="755" WindowStartupLocation="CenterScreen" Width="935">
     <DockPanel LastChildFill="True">
         <!--<Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
-            <Image Name="banner" Stretch="Fill" Height="77" VerticalAlignment="Top" Source="/ClothSearch;component/res/banner.png"/>
+            <Image Name="banner" Stretch="Fill" Height="77" VerticalAlignment="Top" Source="/FeatureTest;component/res/banner.png"/>
         </Border>-->
         <Border DockPanel.Dock="Top" Style="{StaticResource blueBorder}">
             <ToolBarTray Name="toolBarTray1" VerticalAlignment="Top">
                 <ToolBar Band="1" BandIndex="1">
                     <Button Name="btnToolOpen" Click="btnToolOpen_Click" ToolTip="新增图片">
-                        <Image Source="/ClothSearch;component/res/open.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/open.png" Stretch="Fill" Width="16" />
                     </Button>
                     <Button Name="btnToolImport" ToolTip="导入图片" Click="btnToolImport_Click">
-                        <Image Source="/ClothSearch;component/res/import.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/import.png" Stretch="Fill" Width="16" />
                     </Button>
                     <Button Name="btnToolImportFolder" ToolTip="导入文件夹" Click="btnToolImportFolder_Click">
-                        <Image Source="/ClothSearch;component/res/importfolder.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/importfolder.png" Stretch="Fill" Width="16" />
                     </Button>
                 </ToolBar>
                 <ToolBar Band="1" BandIndex="2">
                     <Button Name="btnToolImportKey" ToolTip="导入注册文件" Click="btnToolImportKey_Click">
-                        <Image Source="/ClothSearch;component/res/importkey.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/importkey.png" Stretch="Fill" Width="16" />
                     </Button>
                     <Button Name="btnToolSeeKey" ToolTip="查看序列号" Click="btnToolSeeKey_Click">
-                        <Image Source="/ClothSearch;component/res/seekey.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/seekey.png" Stretch="Fill" Width="16" />
                     </Button>
                     <Button Name="btnToolExportKey" ToolTip="导出申请码" Click="btnToolExportKey_Click">
-                        <Image Source="/ClothSearch;component/res/exportkey.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/exportkey.png" Stretch="Fill" Width="16" />
                     </Button>
                 </ToolBar>
                 <ToolBar Band="1" BandIndex="3">
                     <Button Name="btnToolAbout" ToolTip="关于" Click="btnToolAbout_Click">
-                        <Image Source="/ClothSearch;component/res/about.png" Stretch="Fill" Width="16" />
+                        <Image Source="/FeatureTest;component/res/about.png" Stretch="Fill" Width="16" />
                     </Button>
                 </ToolBar>
             </ToolBarTray>
         </Border>
         <Border DockPanel.Dock="Top"  HorizontalAlignment="Center">
             <Canvas Name="cvsSearchArea" MinWidth="900" Height="68" VerticalAlignment="Top">
-                <Button Canvas.Left="56" Canvas.Top="13" Height="23" Name="btnMatchAlgorithm" Width="75" Click="btnMatchAlgorithm_Click">匹配算法</Button>
-                <Label Canvas.Left="146" Canvas.Top="13" Width="38">花型:</Label>
-                <TextBox Canvas.Left="184" Canvas.Top="13" Height="22" Name="txtSearchInput" Width="270" TextChanged="txtSearchInput_TextChanged" />
+                <!--<Button Canvas.Left="56" Canvas.Top="13" Height="23" Name="btnMatchAlgorithm" Width="75" Click="btnMatchAlgorithm_Click">匹配算法</Button>-->
+                <Label Canvas.Left="8.5" Canvas.Top="12" Width="42.5" Height="26">算法:</Label>
+                <ComboBox Canvas.Left="51.5" Canvas.Top="14" Name="cmbAlgorithm" SelectedIndex="0" Width="195" Height="22" SelectionChanged="cmbAlgorithm_SelectionChanged">
+                    <Label>DaubechiesWavelet</Label>
+                    <Label>Cooccurrence</Label>
+                    <Label>RGBSeparateColor</Label>
+                    <Label>RGBColor</Label>
+                    <Label>HSVColor</Label>
+                    <Label>HSVAynsColor</Label>
+                    <Label>HLSColor</Label>
+                </ComboBox>
+                <Label Canvas.Left="249" Canvas.Top="13" Width="38" Height="25.837">花型:</Label>
+                <TextBox Canvas.Left="299" Canvas.Top="13" Height="22" Name="txtSearchInput" Width="155" TextChanged="txtSearchInput_TextChanged" />
                 <Button Canvas.Left="729" Canvas.Top="13" Height="39" Name="btnSearch" Width="106" Click="btnSearch_Click">搜索</Button>
                 <Label Canvas.Left="474" Canvas.Top="13" Height="28" Name="label3" Width="40">颜色:</Label>
                 <Label Canvas.Left="602" Canvas.Top="13" Height="28" Name="label4" Width="37">形状:</Label>

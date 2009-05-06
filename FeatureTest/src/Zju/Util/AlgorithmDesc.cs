@@ -2,7 +2,7 @@
 {
     public enum AlgorithmType
     {
-        Color1, Texture1, Texture2, Texture3,
+        Color1, Texture1, Texture2, Texture3, DaubechiesWavelet, Cooccurrence, RGBSeparateColor, RGBColor, HSVColor, HSVAynsColor, HLSColor,
     };
 
     public enum RecallLevel
@@ -17,7 +17,7 @@
 
         public AlgorithmDesc()
         {
-            AType = AlgorithmType.Texture3;
+            AType = AlgorithmType.DaubechiesWavelet;
             RLevel = RecallLevel.Default;
         }
     }
