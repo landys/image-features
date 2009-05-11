@@ -29,10 +29,13 @@ namespace Zju.Util
 
         public static int[] IgnoreColors = { -1 };
 
-
         public const string LuvFileName = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\luv.dat";
 
         public const int MAX_IMPORT_THREADS = 100;
+
+        public const int MAX_INTER_RESULT_SIZE = 2000;
+
+        public const int MAX_FINAL_RESULT_SIZE = 200;
     }
 
     [Flags]

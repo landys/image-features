@@ -7,29 +7,31 @@ namespace Zju.Service
 {
     public interface IClothSearchService
     {
+        List<Cloth> SearchByPicCombine(Cloth keyCloth, AlgorithmType[] aTypes, float[] weights);
+
         List<Cloth> SearchByText(String words, ColorEnum colors, ShapeEnum shapes);
 
-        List<Cloth> SearchByPicRGBSeparateColor(Cloth keyCloth);
+        List<Cloth> SearchByPicRGBSeparateColor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicRGBColor(Cloth keyCloth);
+        List<Cloth> SearchByPicRGBColor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicHSVColor(Cloth keyCloth);
+        List<Cloth> SearchByPicHSVColor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicHSVAynsColor(Cloth keyCloth);
+        List<Cloth> SearchByPicHSVAynsColor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicHLSColor(Cloth keyCloth);
+        List<Cloth> SearchByPicHLSColor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicDaubechiesWavelet(Cloth keyCloth);
+        List<Cloth> SearchByPicDaubechiesWavelet(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicGabor(Cloth keyCloth);
+        List<Cloth> SearchByPicGabor(Cloth keyCloth, int reSize);
 
-        List<Cloth> SearchByPicCooccurrence(Cloth keyCloth);
+        List<Cloth> SearchByPicCooccurrence(Cloth keyCloth, int reSize);
 
         List<Cloth> SearchByTextAndPicColor(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth);
 
         List<Cloth> SearchByTextAndPicTexture(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth);
 
-        List<Cloth> SearchByPicGaborAndHSVAsyColor(Cloth keyCloth);
+        List<Cloth> SearchByPicGaborAndHSVAsyColor(Cloth keyCloth, int reSize);
 
         List<Cloth> SearchTest(Cloth keyCloth);
 

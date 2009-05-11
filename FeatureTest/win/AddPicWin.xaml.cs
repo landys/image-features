@@ -148,11 +148,11 @@ namespace FeatureTest
             //cloth.RGBSeparateColorVector = (useKeyPic && keyCloth.RGBSeparateColorVector != null)
             //    ? keyCloth.RGBSeparateColorVector : ClothUtil.ImageMatcherInst.ExtractRGBSeparateColorVector(cloth.Path, 8, SearchConstants.IgnoreColors);
             cloth.RGBColorVector = (useKeyPic && keyCloth.RGBColorVector != null)
-                ? keyCloth.RGBColorVector : ClothUtil.ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+                ? keyCloth.RGBColorVector : ClothUtil.ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             cloth.HSVAynsColorVector = (useKeyPic && keyCloth.HSVAynsColorVector != null)
                 ? keyCloth.HSVAynsColorVector : ClothUtil.ImageMatcherInst.ExtractHSVAynsColorVector(cloth.Path, 0, SearchConstants.IgnoreColors);
             cloth.HSVColorVector = (useKeyPic && keyCloth.HSVColorVector != null)
-                ? keyCloth.HSVColorVector : ClothUtil.ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+                ? keyCloth.HSVColorVector : ClothUtil.ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             if (cloth.HSVColorVector != null)
             {
                 cloth.ColorNum = ClothUtil.getColorNumber(cloth.HSVColorVector, 0.07f);

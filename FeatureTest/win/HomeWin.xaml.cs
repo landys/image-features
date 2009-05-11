@@ -42,9 +42,13 @@ namespace FeatureTest
         /// </summary>
         private Cloth keyCloth;
 
-        private AlgorithmDesc aDesc;
+        private AlgorithmType textureAType;
 
-        private AlgorithmType[] aTypes;
+        private AlgorithmType colorAType;
+
+        private AlgorithmType[] textureATypes;
+
+        private AlgorithmType[] colorATypes;
 
         private OpenFileDialog dlgOpenKeyPic;
 
@@ -126,15 +130,15 @@ namespace FeatureTest
             this.Resources.Add("modifyColorItems", modifyColorItems);
             this.Resources.Add("modifyShapeItems", modifyShapeItems);
 
-            aDesc = new AlgorithmDesc();
-            aTypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.RGBSeparateColor,
-                AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.HSVAynsColor, AlgorithmType.HLSColor };
+            textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence };
+
+            colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
+                AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.RGBSeparateColor, AlgorithmType.HLSColor };
             
 
             InitializeComponent();
 
             btnSearch.IsEnabled = false;
-            rbtnPic.IsChecked = true;
 
             dlgOpenKeyPic = newOpenFileDialog();
             dlgOpenKeyPic.Title = "请选择关键图";
@@ -154,7 +158,6 @@ namespace FeatureTest
             imageMatcher = ClothUtil.ImageMatcherInst;
 
             // temp
-            rbtnCombine.IsEnabled = false;
             txtModifyName.IsEnabled = false;
 
             //picNames = new List<string>();
@@ -184,34 +187,7 @@ namespace FeatureTest
                 keyCloth.Pattern = ClothUtil.ExtractPattern(keyCloth.Path);
                 keyCloth.Name = keyCloth.Pattern;
 
-                //keyCloth.ColorVector = imageMatcher.ExtractRGBSeparateColorVector(keyCloth.Path, SearchConstants.IgnoreColors);
-                //keyCloth.TextureVector = imageMatcher.ExtractDaubechiesWaveletVector(keyCloth.Path);
-                //keyCloth.GaborVector = imageMatcher.ExtractGaborVector(keyCloth.Path);
-                //keyCloth.CooccurrenceVector = imageMatcher.ExtractCooccurrenceVector(keyCloth.Path);
-
-                /*keyClothOpened = true;
-                if (keyClothThread != null && keyClothThread.IsAlive)
-                {
-                    keyClothThread.Abort();
-                }
-                ParameterizedThreadStart threadDelegate = new ParameterizedThreadStart(fillKeyCloth);
-                keyClothThread = new Thread(threadDelegate);
-                keyClothThread.IsBackground = true;
-                keyClothThread.Start(dlgOpenKeyPic.FileName); 
-                */
-                /*lock (keyClothLock)
-                {
-                    FillKeyCloth fkc = new FillKeyCloth(fillKeyCloth);
-                    fkc.BeginInvoke(dlgOpenKeyPic.FileName, ++curKeyClothOperId, null, null);
-                }*/
-
-                //ViewHelper.ExtractFeatures(keyCloth);
-                //keyCloth.ColorVector = imageMatcher.ExtractRGBSeparateColorVector(keyCloth.Path, ViewConstants.IgnoreColors);
-                //keyCloth.TextureVector = imageMatcher.ExtractDaubechiesWaveletVector(keyCloth.Path);
-                //keyCloth.GaborVector = imageMatcher.ExtractGaborVector(keyCloth.Path);
-                //keyCloth.CooccurrenceVector = imageMatcher.ExtractCooccurrenceVector(keyCloth.Path);
-
-                updateSearchButton();
+                updateSearchButtonByPic();
             }
         }
 
@@ -378,93 +354,40 @@ namespace FeatureTest
             aboutBox.ShowDialog();
         }
 
-        private void btnMatchAlgorithm_Click(object sender, RoutedEventArgs e)
-        {
-            // window for selecting match algorithms.
-            matchAlgorithmWin = new MatchAlgorithmWin(aDesc);
-            matchAlgorithmWin.Owner = this;
-            matchAlgorithmWin.ShowDialog();
-        }
-
 		private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            /*if (++count >= 1000)
+            if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
             {
-                MessageBox.Show("系统未注册, 请与供应商联系, 谢谢.");
-                this.Close();
-            }*/
+                MessageBox.Show("图片搜索必须先指定关键图.", "搜索图片...");
+                return;
+            }
 
-            if (true == rbtnPic.IsChecked)
+            if (!(cbTextureAlgorithm.IsChecked == true || cbColorAlgorithm.IsChecked == true))
             {
-                if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
-                {
-                    MessageBox.Show("图片搜索必须先指定关键图.", "搜索图片...");
-                    return;
-                }
-                lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
-                searchedClothes = searchByPic();
+                MessageBox.Show("请先指定图像特征提取算法.", "搜索图片...");
+                return;
             }
-            else if (true == rbtnText.IsChecked)
-            {
-                lblSearchResultInfo.Content = "正在通过文字搜索请稍候...";
-                searchedClothes = searchByText();
-            }
-            else if (true == rbtnCombine.IsChecked)
-            {
-                lblSearchResultInfo.Content = "正在进行联合搜索请稍候...";
-                searchedClothes = searchByCombine();
-            }
+
+            lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
+            searchedClothes = searchByPic();
             
             updatePicResults();
         }
-        /*
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+
+        private float convert2Float(string s)
         {
-            /*if (++count >= 1000)
+            float f = 0;
+            try
             {
-                MessageBox.Show("系统未注册, 请与供应商联系, 谢谢.");
-                this.Close();
-            }*
-
-            //inProgWin = new IndeterminateProgressWin("请等待", "正在查询中...");
-            //inProgWin.Show();
-
-            int searchMark = 0;
-            if (true == rbtnPic.IsChecked)
-            {
-                //if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
-                if (!canSearchByPic())
-                {
-                    MessageBox.Show("图片搜索必须先指定关键图.", "搜索图片...");
-                    return;
-                }
-                lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
-                searchMark = 1;
-                //searchedClothes = searchByPic();
+                f = float.Parse(s);
             }
-            else if (true == rbtnText.IsChecked)
+            catch (Exception e)
             {
-                lblSearchResultInfo.Content = "正在通过文字搜索请稍候...";
-                searchMark = 2;
-                //searchedClothes = searchByText();
-            }
-            else if (true == rbtnCombine.IsChecked)
-            {
-                if (!canSearchByPic())
-                {
-                    MessageBox.Show("联合搜索必须先指定关键图.", "联合搜索图片...");
-                    return;
-                }
-                lblSearchResultInfo.Content = "正在进行联合搜索请稍候...";
-                searchMark = 3;
-                //searchedClothes = searchByCombine();
-            }
-            
-            updatePicResults();
 
-            //inProgWin.Close();
+            }
+            return f;
         }
-*/
+        
         /// <summary>
         /// 
         /// </summary>
@@ -476,161 +399,110 @@ namespace FeatureTest
                 return null;
             }
 
-            List<Cloth> clothes = new List<Cloth>();
-            int index = ViewHelper.RecallLevelToIndex(aDesc.RLevel);
-            switch (aDesc.AType)
+            List<AlgorithmType> algs = new List<AlgorithmType>();
+            List<float> weights = new List<float>();
+            if (cbTextureAlgorithm.IsChecked == true)
             {
-                case AlgorithmType.DaubechiesWavelet:
-                    if (null == keyCloth.DaubechiesWaveletVector)
-                    {
-                        keyCloth.DaubechiesWaveletVector = imageMatcher.ExtractDaubechiesWaveletVector(keyCloth.Path);
-                    }
-                  
-                    //float[] textureVector = keyCloth.DaubechiesWaveletVector;
-                    if (null == keyCloth.DaubechiesWaveletVector)
-                    {
-                        MessageBox.Show("您选择的文件无法识别, 可能不是图片文件.", "提取DaubechiesWavelet...");
-                        return null;
-                    }
+                algs.Add(textureAType);
+                weights.Add(convert2Float(txtTextureWeight.Text));
+            }
+            if (cbColorAlgorithm.IsChecked == true)
+            {
+                algs.Add(colorAType);
+                weights.Add(convert2Float(txtColorWeight.Text));
+            }
 
-                    /*if (clothSearchService.GetTextureMDLimit() != SearchConstants.TextureMDLimits[index])
-                    {
-                        clothSearchService.SetTextureMDLimit(SearchConstants.TextureMDLimits[index]);
-                    }*/
-                    clothes = clothSearchService.SearchByPicDaubechiesWavelet(keyCloth);
-                    break;
-                case AlgorithmType.Cooccurrence:
-                    if (null == keyCloth.CooccurrenceVector)
-                    {
-                        keyCloth.CooccurrenceVector = imageMatcher.ExtractCooccurrenceVector(keyCloth.Path);
-                    }
-                    if (keyCloth.CooccurrenceVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取CooccurrenceVector...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicCooccurrence(keyCloth);
-                    break;
-                case AlgorithmType.RGBSeparateColor:
-                    if (null == keyCloth.RGBSeparateColorVector)
-                    {
-                        keyCloth.RGBSeparateColorVector = imageMatcher.ExtractRGBSeparateColorVector(keyCloth.Path, 8, SearchConstants.IgnoreColors);
-                    }
-                    if (keyCloth.RGBSeparateColorVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取RGBSeparateColorVector...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicRGBSeparateColor(keyCloth);
-                    break;
-                case AlgorithmType.RGBColor:
-                    if (null == keyCloth.RGBColorVector)
-                    {
-                        keyCloth.RGBColorVector = imageMatcher.ExtractRGBColorVector(keyCloth.Path, 3, SearchConstants.IgnoreColors);
-                    }
-                    if (keyCloth.RGBColorVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取RGBColor...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicRGBColor(keyCloth);
-                    break;
-                case AlgorithmType.HSVAynsColor:
-                    if (null == keyCloth.HSVAynsColorVector)
-                    {
-                        keyCloth.HSVAynsColorVector = imageMatcher.ExtractHSVAynsColorVector(keyCloth.Path, 0, SearchConstants.IgnoreColors);
-                    }
-                    if (keyCloth.HSVAynsColorVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HSVAynsColor...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicHSVAynsColor(keyCloth);
-                    break;
-                case AlgorithmType.HSVColor:
-                    if (null == keyCloth.HSVColorVector)
-                    {
-                        keyCloth.HSVColorVector = imageMatcher.ExtractHSVColorVector(keyCloth.Path, 3, SearchConstants.IgnoreColors);
-                        /*int colorNum = ClothUtil.getColorNumber(keyCloth.HSVColorVector, 0.07f);
-                        if (colorNum > 8)
+            foreach (AlgorithmType at in algs)
+            {
+                switch (at)
+                {
+                    case AlgorithmType.DaubechiesWavelet:
+                        if (null == keyCloth.DaubechiesWaveletVector)
                         {
-                            colorNum = 8;
+                            keyCloth.DaubechiesWaveletVector = imageMatcher.ExtractDaubechiesWaveletVector(keyCloth.Path);
+                            if (null == keyCloth.DaubechiesWaveletVector)
+                            {
+                                MessageBox.Show("您选择的文件无法识别, 可能不是图片文件.", "提取DaubechiesWavelet...");
+                                return null;
+                            }
                         }
-                        keyCloth.ColorNum = colorNum;*/
-                    }
-                    if (keyCloth.HSVColorVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HSVColorVector...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicHSVColor(keyCloth);
-                    break;
-                case AlgorithmType.HLSColor:
-                    if (null == keyCloth.HLSColorVector)
-                    {
-                        keyCloth.HLSColorVector = imageMatcher.ExtractHLSColorVector(keyCloth.Path, 3, SearchConstants.IgnoreColors);
-                    }
-                    if (keyCloth.HLSColorVector == null)
-                    {
-                        MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HLSColor...");
-                        return null;
-                    }
-
-                    clothes = clothSearchService.SearchByPicHLSColor(keyCloth);
-                    break;
+                        break;
+                    case AlgorithmType.Cooccurrence:
+                        if (null == keyCloth.CooccurrenceVector)
+                        {
+                            keyCloth.CooccurrenceVector = imageMatcher.ExtractCooccurrenceVector(keyCloth.Path);
+                            if (keyCloth.CooccurrenceVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取CooccurrenceVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.RGBSeparateColor:
+                        if (null == keyCloth.RGBSeparateColorVector)
+                        {
+                            keyCloth.RGBSeparateColorVector = imageMatcher.ExtractRGBSeparateColorVector(keyCloth.Path, 8, SearchConstants.IgnoreColors);
+                            if (keyCloth.RGBSeparateColorVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取RGBSeparateColorVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.RGBColor:
+                        if (null == keyCloth.RGBColorVector)
+                        {
+                            keyCloth.RGBColorVector = imageMatcher.ExtractRGBColorVector(keyCloth.Path, 4, SearchConstants.IgnoreColors);
+                            if (keyCloth.RGBColorVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取RGBColor...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.HSVAynsColor:
+                        if (null == keyCloth.HSVAynsColorVector)
+                        {
+                            keyCloth.HSVAynsColorVector = imageMatcher.ExtractHSVAynsColorVector(keyCloth.Path, 0, SearchConstants.IgnoreColors);
+                            if (keyCloth.HSVAynsColorVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HSVAynsColor...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.HSVColor:
+                        if (null == keyCloth.HSVColorVector)
+                        {
+                            keyCloth.HSVColorVector = imageMatcher.ExtractHSVColorVector(keyCloth.Path, 4, SearchConstants.IgnoreColors);
+                            /*int colorNum = ClothUtil.getColorNumber(keyCloth.HSVColorVector, 0.07f);
+                            if (colorNum > 8)
+                            {
+                                colorNum = 8;
+                            }
+                            keyCloth.ColorNum = colorNum;*/
+                            if (keyCloth.HSVColorVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HSVColorVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.HLSColor:
+                        if (null == keyCloth.HLSColorVector)
+                        {
+                            keyCloth.HLSColorVector = imageMatcher.ExtractHLSColorVector(keyCloth.Path, 4, SearchConstants.IgnoreColors);
+                            if (keyCloth.HLSColorVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HLSColor...");
+                                return null;
+                            }
+                        }
+                        break;
+                }
             }
-
-            return clothes;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private List<Cloth> searchByText()
-        {
-            string words = string.IsNullOrEmpty(txtSearchInput.Text) ? null : txtSearchInput.Text;
             
-            ColorEnum colors = ColorEnum.NONE;
-            foreach (ColorItem ci in colorItems)
-            {
-                if (ci.Selected)
-                {
-                    colors |= ci.Value;
-                }
-            }
-
-            ShapeEnum shapes = ShapeEnum.NONE;
-            foreach (ShapeItem si in shapeItems)
-            {
-                if (si.Selected)
-                {
-                    shapes |= si.Value;
-                }
-            }
-
-            return clothSearchService.SearchByText(words, colors, shapes);
-        }
-
-        private List<Cloth> searchByCombine()
-        {
-            List<List<Cloth>> clothLists = new List<List<Cloth>>();
-            List<Cloth> clothesByText = searchByText();
-            if (clothesByText == null || clothesByText.Count == 0)
-            {
-                return new List<Cloth>();
-            }
-
-            clothLists.Add(clothesByText);
-
-            clothLists.Add(searchByPic());
-
-            return ClothUtil.IntersectClothLists(clothLists);
+            return clothSearchService.SearchByPicCombine(keyCloth, algs.ToArray(), weights.ToArray());
         }
 
         /// <summary>
@@ -722,34 +594,6 @@ namespace FeatureTest
             txtModifyPattern.Text = string.IsNullOrEmpty(selectedCloth.Pattern) ? "" : selectedCloth.Pattern;
 
             txtModifyName.Text = selectedCloth.ColorNum.ToString();
-
-            ColorEnum colors = selectedCloth.Colors;
-            foreach (ColorItem ci in modifyColorItems)
-            {
-                if ((colors & ci.Value) != 0)
-                {
-                    ci.Selected = true;
-                }
-                else
-                {
-                    ci.Selected = false;
-                }
-            }
-            updateModifyColorText();
-
-            ShapeEnum shapes = selectedCloth.Shapes;
-            foreach (ShapeItem si in modifyShapeItems)
-            {
-                if ((shapes & si.Value) != 0)
-                {
-                    si.Selected = true;
-                }
-                else
-                {
-                    si.Selected = false;
-                }
-            }
-            updateModifyShapeText();
             
             //txtModifyName.IsEnabled = true;
             txtModifyPattern.IsEnabled = true;
@@ -762,8 +606,6 @@ namespace FeatureTest
             imgKeyPic.Source = null;
             keyCloth = null;
             //keyClothOpened = false;
-
-            updateSearchButton();
         }
 
         private void btnResultDelete_Click(object sender, RoutedEventArgs e)
@@ -856,98 +698,6 @@ namespace FeatureTest
             updatePageOfPicResults();
         }
 
-        private void chkColorInput_Click(object sender, RoutedEventArgs e)
-        {
-            String Values = "";
-
-            foreach (ColorItem ci in colorItems)
-            {
-                if (ci.Selected)
-                {
-                    Values += String.IsNullOrEmpty(Values) ? ci.Name : "," + ci.Name;
-                }
-            }
-
-            cmbColorInput.Text = Values;
-
-            updateSearchButton();
-        }
-
-        private void chkShapeInput_Click(object sender, RoutedEventArgs e)
-        {
-            String Values = "";
-
-            foreach (ShapeItem ci in shapeItems)
-            {
-                if (ci.Selected)
-                {
-                    Values += String.IsNullOrEmpty(Values) ? ci.Name : "," + ci.Name;
-                }
-            }
-
-            cmbShapeInput.Text = Values;
-
-            updateSearchButton();
-        }
-        /*
-                private void cmbInput_MouseEnter(object sender, MouseEventArgs e)
-                {
-                    if (sender is ComboBox)
-                    {
-                        ((ComboBox)sender).IsDropDownOpen = true;
-                    }
-                }
-        */
-        private void rbtnCombine_Checked(object sender, RoutedEventArgs e)
-        {
-            updateSearchButtonByCombine();
-        }
-
-        private void rbtnText_Checked(object sender, RoutedEventArgs e)
-        {
-            updateSearchButtonByText();
-        }
-
-        private bool canSearchByText()
-        {
-            bool cando = false;
-
-            if (!string.IsNullOrEmpty(txtSearchInput.Text))
-            {
-                cando = true;
-            }
-
-            if (!cando)
-            {
-                foreach (ColorItem ci in colorItems)
-                {
-                    if (ci.Selected)
-                    {
-                        cando = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!cando)
-            {
-                foreach (ShapeItem si in shapeItems)
-                {
-                    if (si.Selected)
-                    {
-                        cando = true;
-                        break;
-                    }
-                }
-            }
-
-            return cando;
-        }
-
-        private void rbtnPic_Checked(object sender, RoutedEventArgs e)
-        {
-            updateSearchButtonByPic();
-        }
 
 		private bool canSearchByPic()
         {
@@ -960,38 +710,18 @@ namespace FeatureTest
 
             return cando;
         }
-        /*
-        private bool canSearchByPic()
+ 
+
+        private void cmbTextureAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*bool cando = false;
-
-            if (null != keyCloth && !string.IsNullOrEmpty(keyCloth.Path))
-            {
-                cando = true;
-            }*
-
-            return keyClothOpened;
-        }*/
-
-        private void txtSearchInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            updateSearchButton();
+            textureAType = textureATypes[cmbTextureAlgorithm.SelectedIndex];
         }
 
-        private void cmbAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbColorAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            aDesc.AType = aTypes[cmbAlgorithm.SelectedIndex];
+            colorAType = colorATypes[cmbColorAlgorithm.SelectedIndex];
         }
 
-        private void updateSearchButtonByText()
-        {
-            bool cando = canSearchByText();
-
-            if (btnSearch.IsEnabled != cando)
-            {
-                btnSearch.IsEnabled = cando;
-            }
-        }
 
         private void updateSearchButtonByPic()
         {
@@ -1001,72 +731,6 @@ namespace FeatureTest
             {
                 btnSearch.IsEnabled = cando;
             }
-        }
-
-        private void updateSearchButtonByCombine()
-        {
-            bool cando = canSearchByText() && canSearchByPic();
-
-            if (btnSearch.IsEnabled != cando)
-            {
-                btnSearch.IsEnabled = cando;
-            }
-        }
-
-        private void updateSearchButton()
-        {
-            if (true == rbtnPic.IsChecked)
-            {
-                updateSearchButtonByPic();
-            }
-            else if (true == rbtnText.IsChecked)
-            {
-                updateSearchButtonByText();
-            }
-            else if (true == rbtnCombine.IsChecked)
-            {
-                updateSearchButtonByCombine();
-            }
-        }
-
-        private void chkModifyColor_Click(object sender, RoutedEventArgs e)
-        {
-            updateModifyColorText();
-        }
-
-        private void updateModifyColorText()
-        {
-            String Values = "";
-
-            foreach (ColorItem ci in modifyColorItems)
-            {
-                if (ci.Selected)
-                {
-                    Values += String.IsNullOrEmpty(Values) ? ci.Name : "," + ci.Name;
-                }
-            }
-
-            cmbModifyColor.Text = Values;
-        }
-
-        private void chkModifyShape_Click(object sender, RoutedEventArgs e)
-        {
-            updateModifyShapeText();
-        }
-
-        private void updateModifyShapeText()
-        {
-            String Values = "";
-
-            foreach (ShapeItem ci in modifyShapeItems)
-            {
-                if (ci.Selected)
-                {
-                    Values += String.IsNullOrEmpty(Values) ? ci.Name : "," + ci.Name;
-                }
-            }
-
-            cmbModifyShape.Text = Values;
         }
     }
 }

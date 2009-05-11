@@ -205,9 +205,9 @@ namespace Zju.Util
 
             // color features
             //cloth.RGBSeparateColorVector = ImageMatcherInst.ExtractRGBSeparateColorVector(cloth.Path, 8, SearchConstants.IgnoreColors);
-            cloth.RGBColorVector = ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+            cloth.RGBColorVector = ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             cloth.HSVAynsColorVector = ImageMatcherInst.ExtractHSVAynsColorVector(cloth.Path, 0, SearchConstants.IgnoreColors);
-            cloth.HSVColorVector = ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+            cloth.HSVColorVector = ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             //cloth.HLSColorVector = ImageMatcherInst.ExtractHLSColorVector(cloth.Path, 8, SearchConstants.IgnoreColors);
 
             // texture features
@@ -235,7 +235,7 @@ namespace Zju.Util
             }
             if (null == cloth.RGBColorVector)
             {
-                cloth.RGBColorVector = ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+                cloth.RGBColorVector = ImageMatcherInst.ExtractRGBColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             }
             if (null == cloth.HSVAynsColorVector)
             {
@@ -243,7 +243,7 @@ namespace Zju.Util
             }
             if (null == cloth.HSVColorVector)
             {
-                cloth.HSVColorVector = ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+                cloth.HSVColorVector = ImageMatcherInst.ExtractHSVColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
                 int colorNum = getColorNumber(cloth.HSVColorVector, 0.07f);
                 if (colorNum > 8)
                 {
@@ -253,7 +253,7 @@ namespace Zju.Util
             }
             if (null == cloth.HLSColorVector)
             {
-                cloth.HLSColorVector = ImageMatcherInst.ExtractHLSColorVector(cloth.Path, 3, SearchConstants.IgnoreColors);
+                cloth.HLSColorVector = ImageMatcherInst.ExtractHLSColorVector(cloth.Path, 4, SearchConstants.IgnoreColors);
             }
             
             // texture features
