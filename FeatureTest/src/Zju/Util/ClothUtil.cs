@@ -196,7 +196,7 @@ namespace Zju.Util
         /// And save the features back into the <code>cloth</code> objects.
         /// </summary>
         /// <param name="cloth"></param>
-        public static void ExtractFeatures(Cloth cloth, bool isGabor)
+        /*public static void ExtractFeatures(Cloth cloth, bool isGabor)
         {
             if (String.IsNullOrEmpty(cloth.Path))
             {
@@ -219,7 +219,7 @@ namespace Zju.Util
             //}
 
             cloth.ColorNum = getColorNumber(cloth.HSVColorVector, 0.07f);
-        }
+        }*/
 
         public static void ExtractFeaturesNecessary(Cloth cloth, bool isGabor)
         {
@@ -264,6 +264,10 @@ namespace Zju.Util
             if (null == cloth.CooccurrenceVector)
             {
                 cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
+            }
+            if (null == cloth.TamuraVector)
+            {
+                cloth.TamuraVector = ImageMatcherInst.ExtractTamuraVector(cloth.Path, 6);
             }
 
             //if (isGabor && null == cloth.GaborVector)

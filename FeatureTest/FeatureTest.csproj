@@ -130,6 +130,7 @@
     <Compile Include="src\Zju\Searcher\PicParam.cs" />
     <Compile Include="src\Zju\Searcher\TextSearcher.cs" />
     <Compile Include="src\Zju\Searcher\TextureSearcher.cs" />
+    <Compile Include="TamuraSearcher.cs" />
     <Compile Include="win\AddPicWin.xaml.cs">
       <DependentUpon>AddPicWin.xaml</DependentUpon>
     </Compile>

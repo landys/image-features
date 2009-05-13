@@ -38,6 +38,7 @@
                 <ComboBox Canvas.Left="108" Canvas.Top="36" Name="cmbTextureAlgorithm" SelectedIndex="0" Width="151" Height="22" SelectionChanged="cmbTextureAlgorithm_SelectionChanged">
                     <Label>DaubechiesWavelet</Label>
                     <Label>Cooccurrence</Label>
+                    <Label>Tamura</Label>
                 </ComboBox>
                 
                 <CheckBox Canvas.Left="284.5" Canvas.Top="19" Height="16" Name="cbColorAlgorithm" Width="72">颜色算法:</CheckBox>

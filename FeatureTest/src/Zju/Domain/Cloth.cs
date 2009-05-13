@@ -56,6 +56,8 @@ namespace Zju.Domain
 
         private float[] cooccurrenceVector;
 
+        private float[] tamuraVector;
+
         /// <summary>
         /// Color number in the cloth.
         /// </summary>
@@ -148,6 +150,12 @@ namespace Zju.Domain
             set { cooccurrenceVector = value; }
         }
 
+        public float[] TamuraVector
+        {
+            get { return tamuraVector; }
+            set { tamuraVector = value; }
+        }
+
         public int ColorNum
         {
             get { return colorNum; }
@@ -176,6 +184,7 @@ namespace Zju.Domain
             this.daubechiesWaveletVector = cloth.DaubechiesWaveletVector;
             this.gaborVector = cloth.GaborVector;
             this.cooccurrenceVector = cloth.CooccurrenceVector;
+            this.tamuraVector = cloth.tamuraVector;
             this.updateTime = cloth.UpdateTime;
             this.colorNum = cloth.colorNum;
         }

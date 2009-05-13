@@ -130,7 +130,7 @@ namespace FeatureTest
             this.Resources.Add("modifyColorItems", modifyColorItems);
             this.Resources.Add("modifyShapeItems", modifyShapeItems);
 
-            textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence };
+            textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.Tamura};
 
             colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
                 AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.RGBSeparateColor, AlgorithmType.HLSColor };
@@ -321,33 +321,6 @@ namespace FeatureTest
             progressWin = null;
         }
 
-        private void btnToolImportKey_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlgImportKey = new OpenFileDialog();
-            dlgImportKey.Filter = "key file(*.key)|*.key";
-            dlgImportKey.Title = "请选择注册码文件导入";
-            if (dlgImportKey.ShowDialog() == true)
-            {
-                // do something
-            }
-        }
-
-        private void btnToolSeeKey_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("abcdefghijklmnopqrstuvwxyz", "您的注册码");
-        }
-
-        private void btnToolExportKey_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog dlgExportKey = new SaveFileDialog();
-            dlgExportKey.Filter = "key file(*.key)|*.key";
-            dlgExportKey.Title = "请指定导出的注册码文件名";
-            if (dlgExportKey.ShowDialog() == true)
-            {
-                // do something
-            }
-        }
-
         private void btnToolAbout_Click(object sender, RoutedEventArgs e)
         {
             ClothSearchAboutBox aboutBox = new ClothSearchAboutBox();
@@ -495,6 +468,17 @@ namespace FeatureTest
                             if (keyCloth.HLSColorVector == null)
                             {
                                 MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取HLSColor...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.Tamura:
+                        if (null == keyCloth.TamuraVector)
+                        {
+                            keyCloth.TamuraVector = imageMatcher.ExtractTamuraVector(keyCloth.Path, 6);
+                            if (keyCloth.TamuraVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取TamuraVector...");
                                 return null;
                             }
                         }

@@ -27,7 +27,7 @@ namespace FeatureTest
 
             // the first elements of these arrays are always the default ones.
             rLevels = new RecallLevel[] { RecallLevel.Default, RecallLevel.Recall1, RecallLevel.Recall2, RecallLevel.Recall3 };
-            aTypes = new AlgorithmType[] { AlgorithmType.Texture3, AlgorithmType.Texture2, AlgorithmType.Texture1, AlgorithmType.Color1 };
+            aTypes = new AlgorithmType[] { /*AlgorithmType.Texture3, AlgorithmType.Texture2, AlgorithmType.Texture1, AlgorithmType.Color1*/ };
             rbtns = new RadioButton[] { rbtnTexture3, rbtnTexture2, rbtnTexture1, rbtnColor1 };
             cmbs = new ComboBox[] { cmbTexture3, cmbTexture2, cmbTexture1, cmbColor1 };
 

@@ -59,8 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="E:/projects/DressSearch/codes/FeatureTest/Debug"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -130,8 +130,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="E:/projects/DressSearch/codes/FeatureTest/Release"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>

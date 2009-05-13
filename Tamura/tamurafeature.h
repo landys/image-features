@@ -15,4 +15,4 @@ ImageFeature coarseness(const ImageFeature &image, uint z);
 double getLocalContrast(const ImageFeature &image, int xpos, int ypos, uint z);
 double efficientLocalMean(const uint y,const uint x,const uint k,const ImageFeature &laufendeSumme);
 
-HistogramFeature histogramize(const ImageFeature &image);
+HistogramFeature histogramize(const ImageFeature &image, int n);

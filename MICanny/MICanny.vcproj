@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Tamura"
-	ProjectGUID="{89924511-7495-4C67-9591-9163726DC4EA}"
-	RootNamespace="Tamura"
+	Name="MICanny"
+	ProjectGUID="{48902327-348D-4F07-B863-52DC9963002E}"
+	RootNamespace="MICanny"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -42,7 +42,7 @@
 				Optimization="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="2"
+				RuntimeLibrary="1"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -57,7 +57,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -86,7 +89,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -109,7 +112,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -125,6 +128,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -162,35 +166,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\basefeature.cpp"
+				RelativePath=".\CImg.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\extracttamura.cpp"
+				RelativePath=".\extractMICanny.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\histogramfeature.cpp"
+				RelativePath=".\FeatureBase.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\imagefeature.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\imagelib.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\tamurafeature.cpp"
+				RelativePath=".\ShapeFeature.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\test.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\vectorfeature.cpp"
 				>
 			</File>
 		</Filter>
@@ -200,35 +192,39 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\basefeature.h"
+				RelativePath=".\CImg.h"
 				>
 			</File>
 			<File
-				RelativePath=".\diag.h"
+				RelativePath=".\extractMICanny.h"
 				>
 			</File>
 			<File
-				RelativePath=".\extracttamura.h"
+				RelativePath=".\FeatureBase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\histogramfeature.h"
+				RelativePath=".\jconfig.h"
 				>
 			</File>
 			<File
-				RelativePath=".\imagefeature.h"
+				RelativePath=".\jerror.h"
 				>
 			</File>
 			<File
-				RelativePath=".\imagelib.h"
+				RelativePath=".\jmorecfg.h"
 				>
 			</File>
 			<File
-				RelativePath=".\tamurafeature.h"
+				RelativePath=".\jpeglib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\vectorfeature.h"
+				RelativePath=".\RetureCode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShapeFeature.h"
 				>
 			</File>
 		</Filter>
@@ -238,6 +234,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath=".\libjpeg.lib"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -279,11 +279,11 @@ ImageFeature coarseness(const ImageFeature &image,const uint z) {
   return Sbest;
 }
 
-HistogramFeature histogramize(const ImageFeature &image) {
+HistogramFeature histogramize(const ImageFeature &image, int n) {
 	// min -> max: 0,0,0 -> pi,5,128
-	// steps: 8,8,8
+	// steps: n,n,n
 
-	vector<uint> steps(3,8);
+	vector<uint> steps(3,n);
 	HistogramFeature result(steps);
 	result.min()[0]=0;    result.max()[0]=1.0;
 	result.min()[1]=0;    result.max()[1]=1.0;

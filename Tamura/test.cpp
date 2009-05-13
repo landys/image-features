@@ -1,6 +1,7 @@
 #include <iostream>
 #include "imagelib.h"
 #include "tamurafeature.h"
+#include "extracttamura.h"
 #include <ctime>
 #include <cstdio>
 using namespace std;
@@ -37,7 +38,7 @@ void doTamura(const string& filename, FILE* flog)
 
 	normalize(tamuraImage);
 
-	HistogramFeature h=histogramize(tamuraImage);
+	HistogramFeature h=histogramize(tamuraImage, 6);
 
 	fprintf(flog, "%s %ld %ld\n", filename.c_str(), bt2-bt, clock()-bt);
 
@@ -48,7 +49,7 @@ void doTamura(const string& filename, FILE* flog)
 
 void test1()
 {
-	doTamura("E:\\pic_skindetect\\clothtest\\selected\\6003.jpg", stdout);
+	doTamura("E:\\pic_skindetect\\clothtest\\selected\\02.jpg", stdout);
 }
 
 void test2()
@@ -66,17 +67,31 @@ void test2()
 		int i = 0;
 		for (i=0; imagename[i] != '\n' && imagename[i] != '\r' && imagename[i] != '\0'; ++i); // loop stop here
 		imagename[i] = '\0';
-
-		doTamura(string(imagename), logFile);
 		cout << imagename << endl;
+		doTamura(string(imagename), logFile);
+		
 	}
 	fclose(imageset);
 	fclose(logFile);
 }
 
+void test3()
+{
+	const int n = 6 * 6 * 6;
+	double feature[n];
+	extractTamura("E:\\pic_skindetect\\clothtest\\selected\\6003.jpg", 6, feature);
+
+	for (int i=0; i<n; ++i)
+	{
+		cout << feature[i] << " ";
+	}
+	cout << endl;
+}
+
 int main(int argc, char** argv)
 {
 	test2();
+	//test3();
 	
 	return 0;
 }

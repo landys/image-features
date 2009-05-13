@@ -42,9 +42,17 @@ namespace Zju
 
 			//bool GaborKernelInit(String^ gaborKernelFileName);
 
+			// the size of dimensions is 64
 			array<float>^ ExtractGaborVector(String^ imageFileName);
 
+			// the size of dimensions is 200
 			array<float>^ ExtractCooccurrenceVector(String^ imageFileName);
+
+			// tarmura texture, n*n*n is the size of dimensions, n=6 is prefer
+			array<float>^ ExtractTamuraVector(String^ imageFileName, int n);
+
+			// Moment Invariants using Canny descriptor, the size of dimensions is 7
+			array<double>^ ExtractMICannyVector(String^ imageFileName);
 
 			ImageMatcher();
 
@@ -60,6 +68,10 @@ namespace Zju
 			//bool ImageMatcher::to_CharStar(String^ source, char*& target);
 			//bool ImageMatcher::to_string(String^ source, std::string &target);
 			array<float>^ to_array(float* pf, int n);
+
+			array<float>^ to_array(double* pd, int n);
+
+			array<double>^ to_double_array(double* pd, int n);
 
 //			array<float>^ to_array(Gabor::Pic_GaborWL* picwl);
 

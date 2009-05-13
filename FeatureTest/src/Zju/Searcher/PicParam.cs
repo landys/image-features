@@ -23,6 +23,7 @@ namespace Zju.Searcher
             set;
         }
 
+
         public int ClothNum
         {
             get;

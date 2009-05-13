@@ -6,6 +6,8 @@
 //#include <vcclr.h>
 #include "ImageMatcher.h"
 #include "GetFeature.h"
+#include "../Tamura/extracttamura.h"
+#include "../MICanny/extractMICanny.h"
 #include <cmath>
 
 #pragma comment(lib, "cxcore.lib")
@@ -21,6 +23,12 @@
 #pragma comment(lib, "libmwservices.lib")*/
 //#pragma comment(lib, "gaborfilterdll.lib")
 //#pragma comment(lib, "gaborkerneldll.lib")
+
+#pragma comment(lib, "CORE_RL_Magick++_.lib")
+
+#pragma comment(lib, "Tamura.lib")
+
+#pragma comment(lib, "MICanny.lib")
 
 using namespace System::Runtime::InteropServices;
 
@@ -603,6 +611,56 @@ namespace Zju
 			return textureVector;
 		}
 
+		// tarmura texture
+		array<float>^ ImageMatcher::ExtractTamuraVector(String^ imageFileName, int n)
+		{
+			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
+			const char* fileName = static_cast<const char*>(ip.ToPointer());
+
+			array<float>^ textureVector = nullptr;
+			int n3 = n * n * n;
+			double* feature = new double[n3];
+			try 
+			{
+				extractTamura(fileName, n, feature);
+				textureVector = to_array(feature, n3);
+			}
+			catch (Exception^ e)
+			{
+				// TODO do some log
+			}
+
+			Marshal::FreeHGlobal(ip);
+			delete[] feature;
+
+			return textureVector;
+		}
+
+		// Moment Invariants using Canny descriptor
+		array<double>^ ImageMatcher::ExtractMICannyVector(String^ imageFileName)
+		{
+			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
+			const char* fileName = static_cast<const char*>(ip.ToPointer());
+
+			array<double>^ shapeVector = nullptr;
+			const int n = 7;
+			double* feature = new double[n];
+			try 
+			{
+				extractMICanny(fileName, feature);
+				shapeVector = to_double_array(feature, n);
+			}
+			catch (Exception^ e)
+			{
+				// TODO do some log
+			}
+
+			Marshal::FreeHGlobal(ip);
+			delete[] feature;
+
+			return shapeVector;
+		}
+
 		/*
 		// the "target" alloc in this method, the should be delete[] outside.
 		bool ImageMatcher::to_CharStar(String^ source, char*& target)
@@ -635,6 +693,29 @@ namespace Zju
 			}
 
 			return textureVector;
+		}
+
+		array<float>^ ImageMatcher::to_array(double* pd, int n)
+		{
+			array<float>^ re = gcnew array<float>(n);
+			for (int i=0; i<n; ++i)
+			{
+				re[i] = pd[i];
+			}
+
+			return re;
+		}
+
+
+		array<double>^ ImageMatcher::to_double_array(double* pd, int n)
+		{
+			array<double>^ re = gcnew array<double>(n);
+			for (int i=0; i<n; ++i)
+			{
+				re[i] = pd[i];
+			}
+
+			return re;
 		}
 
 		/*array<float>^ ImageMatcher::to_array(Gabor::Pic_GaborWL* picwl)

@@ -54,6 +54,7 @@ namespace Zju.Service
             algoMap.Add(AlgorithmType.HSVAynsColor, SearchByPicHSVAynsColor);
             algoMap.Add(AlgorithmType.HSVColor, SearchByPicHSVColor);
             algoMap.Add(AlgorithmType.HLSColor, SearchByPicHLSColor);
+            algoMap.Add(AlgorithmType.Tamura, SearchByPicTamura);
         }
 
         #region IClothSearchService Members
@@ -201,6 +202,13 @@ namespace Zju.Service
             return new CooccurrenceSearcher(new PicParam(keyCloth.CooccurrenceVector, keyCloth.ColorNum), float.MaxValue/*cooccurrenceMDLimit*/, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
+
+        public List<Cloth> SearchByPicTamura(Cloth keyCloth, int reSize)
+        {
+            return new TamuraSearcher(new PicParam(keyCloth.TamuraVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+                .Search();
+        }
+        
 
         public List<Cloth> SearchByTextAndPicColor(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth)
         {
