@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MIHu.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Stdafx.cpp"
 				>
 				<FileConfiguration
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\ImageMatcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MIHu.h"
 				>
 			</File>
 			<File

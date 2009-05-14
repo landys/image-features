@@ -17,6 +17,9 @@
     <ApplicationIcon>res\butterfly.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <StartupObject>FeatureTest.App</StartupObject>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -113,6 +116,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Zju\Searcher\MIHuSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\MICannySearcher.cs" />
+    <Compile Include="src\Zju\Searcher\ShapeSearcher.cs" />
     <Compile Include="src\Zju\Searcher\ColorSearcher.cs" />
     <Compile Include="src\Zju\Searcher\CooccurrenceSearcher.cs" />
     <Compile Include="src\Zju\Searcher\HLSColorSearcher.cs" />
@@ -130,7 +136,7 @@
     <Compile Include="src\Zju\Searcher\PicParam.cs" />
     <Compile Include="src\Zju\Searcher\TextSearcher.cs" />
     <Compile Include="src\Zju\Searcher\TextureSearcher.cs" />
-    <Compile Include="TamuraSearcher.cs" />
+    <Compile Include="src\Zju\Searcher\TamuraSearcher.cs" />
     <Compile Include="win\AddPicWin.xaml.cs">
       <DependentUpon>AddPicWin.xaml</DependentUpon>
     </Compile>
@@ -186,6 +192,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

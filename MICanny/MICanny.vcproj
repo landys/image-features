@@ -59,7 +59,7 @@
 				Name="VCLinkerTool"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
-				RandomizedBaseAddress="1"
+				RandomizedBaseAddress="2"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>

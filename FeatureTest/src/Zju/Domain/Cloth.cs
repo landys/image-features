@@ -58,6 +58,14 @@ namespace Zju.Domain
 
         private float[] tamuraVector;
 
+        private double[] mICannyVector;
+
+        private double[] mIHuVector;
+
+        private double[] mIAllVector;
+
+        private float[] fourierVector;
+
         /// <summary>
         /// Color number in the cloth.
         /// </summary>
@@ -156,6 +164,30 @@ namespace Zju.Domain
             set { tamuraVector = value; }
         }
 
+        public double[] MICannyVector
+        {
+            get { return mICannyVector; }
+            set { mICannyVector = value; }
+        }
+
+        public double[] MIHuVector
+        {
+            get { return mIHuVector; }
+            set { mIHuVector = value; }
+        }
+
+        public double[] MIAllVector
+        {
+            get { return mIAllVector; }
+            set { mIAllVector = value; }
+        }
+
+        public float[] FourierVector
+        {
+            get { return fourierVector; }
+            set { fourierVector = value; }
+        }
+
         public int ColorNum
         {
             get { return colorNum; }
@@ -184,11 +216,15 @@ namespace Zju.Domain
             this.daubechiesWaveletVector = cloth.DaubechiesWaveletVector;
             this.gaborVector = cloth.GaborVector;
             this.cooccurrenceVector = cloth.CooccurrenceVector;
-            this.tamuraVector = cloth.tamuraVector;
+            this.tamuraVector = cloth.TamuraVector;
+            this.mICannyVector = cloth.MICannyVector;
+            this.mIHuVector = cloth.MIHuVector;
+            this.mIAllVector = cloth.MIAllVector;
+            this.fourierVector = cloth.FourierVector;
             this.updateTime = cloth.UpdateTime;
             this.colorNum = cloth.colorNum;
         }
-
+        
         public Cloth(String name, String pattern, String path, ColorEnum colors, ShapeEnum shapes)
         {
             assignFileds(name, pattern, path, colors, shapes);

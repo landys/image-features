@@ -8,6 +8,7 @@
 #include "GetFeature.h"
 #include "../Tamura/extracttamura.h"
 #include "../MICanny/extractMICanny.h"
+#include "MIHu.h"
 #include <cmath>
 
 #pragma comment(lib, "cxcore.lib")
@@ -648,6 +649,30 @@ namespace Zju
 			try 
 			{
 				extractMICanny(fileName, feature);
+				shapeVector = to_double_array(feature, n);
+			}
+			catch (Exception^ e)
+			{
+				// TODO do some log
+			}
+
+			Marshal::FreeHGlobal(ip);
+			delete[] feature;
+
+			return shapeVector;
+		}
+
+		array<double>^ ImageMatcher::ExtractMIHuVector(String^ imageFileName)
+		{
+			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
+			const char* fileName = static_cast<const char*>(ip.ToPointer());
+
+			array<double>^ shapeVector = nullptr;
+			const int n = 7;
+			double* feature = new double[n];
+			try 
+			{
+				extractMIHu(fileName, feature);
 				shapeVector = to_double_array(feature, n);
 			}
 			catch (Exception^ e)

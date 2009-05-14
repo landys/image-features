@@ -6,21 +6,22 @@ using Zju.Dao;
 
 namespace Zju.Searcher
 {
-    public abstract class PicSearcher : BaseSearcher
+    public abstract class PicSearcher<T> : BaseSearcher where T : System.IComparable<T>
     {
-        protected float limit;
-        protected DelCalcDist calcDist;
+        protected T limit;
+        protected DelCalcDist<T> calcDist;
 
-        protected static readonly DelCalcDist DEFAULT_CALC_DIST_DELEGATE = new DelCalcDist(ClothUtil.CalcManhattanDistance);
+        protected static readonly DelCalcDist<float> DEFAULT_CALC_DIST_DELEGATE = new DelCalcDist<float>(ClothUtil.CalcManhattanDistance);
+        protected static readonly DelCalcDist<double> DEFAULT_DOUBLE_CALC_DIST_DELEGATE = new DelCalcDist<double>(ClothUtil.CalcManhattanDistance);
 
-        public PicSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IBaseSearcher wrappedSearcher, int maxResult)
+        public PicSearcher(PicParam<T> picParam, T limit, DelCalcDist<T> calcDist, IBaseSearcher wrappedSearcher, int maxResult)
             : base(picParam, wrappedSearcher, maxResult)
         {
             this.limit = limit;
             this.calcDist = calcDist;
         }
 
-        public PicSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IClothDao clothDao, int maxResult)
+        public PicSearcher(PicParam<T> picParam, T limit, DelCalcDist<T> calcDist, IClothDao clothDao, int maxResult)
             : base(picParam, clothDao, maxResult)
         {
             this.limit = limit;
@@ -29,7 +30,7 @@ namespace Zju.Searcher
 
         public override List<Cloth> Search()
         {
-            PicParam picParam = (PicParam)param;
+            PicParam<T> picParam = (PicParam<T>)param;
 
             List<Cloth> clothes = null;
             if (wrappedSearcher != null)
@@ -53,12 +54,12 @@ namespace Zju.Searcher
                 throw new NullReferenceException("Both wrappedSearcher and clothDao are null, or some error happened.");
             }
 
-            float[] featureVector = picParam.Feature;
-            SortedDictionary<float, List<Cloth>> sortClothes = new SortedDictionary<float, List<Cloth>>();
+            T[] featureVector = picParam.Feature;
+            SortedDictionary<T, List<Cloth>> sortClothes = new SortedDictionary<T, List<Cloth>>();
             foreach (Cloth cloth in clothes)
             {
-                float md = calcDist(featureVector, GetVector(cloth));
-                if (md <= limit)
+                T md = calcDist(featureVector, GetVector(cloth));
+                if (md.CompareTo(limit) < 0)
                 {
                     if (!sortClothes.ContainsKey(md))
                     {
@@ -82,7 +83,7 @@ namespace Zju.Searcher
             return resultClothes;
         }
 
-        public float Limit
+        public T Limit
         {
             get { return limit; }
             set { limit = value; }
@@ -93,6 +94,6 @@ namespace Zju.Searcher
         /// </summary>
         /// <param name="cloth"></param>
         /// <returns></returns>
-        public abstract float[] GetVector(Cloth cloth);
+        public abstract T[] GetVector(Cloth cloth);
     }
 }

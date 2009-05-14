@@ -4,15 +4,15 @@ using Zju.Dao;
 
 namespace Zju.Searcher
 {
-    public abstract class ColorSearcher : PicSearcher
+    public abstract class ColorSearcher<T> : PicSearcher<T> where T : System.IComparable<T>
     {
-        public ColorSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IClothDao clothDao, int maxResult)
+        public ColorSearcher(PicParam<T> picParam, T limit, DelCalcDist<T> calcDist, IClothDao clothDao, int maxResult)
             : base(picParam, limit, calcDist, clothDao, maxResult)
         {
            
         }
 
-        public ColorSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IBaseSearcher wrappedSearcher, int maxResult)
+        public ColorSearcher(PicParam<T> picParam, T limit, DelCalcDist<T> calcDist, IBaseSearcher wrappedSearcher, int maxResult)
             : base(picParam, limit, calcDist, wrappedSearcher, maxResult)
         {
 

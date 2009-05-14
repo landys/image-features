@@ -2,7 +2,7 @@
 {
     public enum AlgorithmType
     {
-        DaubechiesWavelet, Cooccurrence, RGBSeparateColor, RGBColor, HSVColor, HSVAynsColor, HLSColor, Tamura, Gabor,
+        DaubechiesWavelet, Cooccurrence, RGBSeparateColor, RGBColor, HSVColor, HSVAynsColor, HLSColor, Tamura, Gabor, MICanny, MIHu, MIAll, Fourier, 
     };
 
     public enum RecallLevel

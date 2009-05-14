@@ -27,6 +27,12 @@ namespace Zju.Service
 
         List<Cloth> SearchByPicCooccurrence(Cloth keyCloth, int reSize);
 
+        List<Cloth> SearchByPicTamura(Cloth keyCloth, int reSize);
+
+        List<Cloth> SearchByPicMICanny(Cloth keyCloth, int reSize);
+
+        List<Cloth> SearchByPicMIHu(Cloth keyCloth, int reSize);
+
         List<Cloth> SearchByTextAndPicColor(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth);
 
         List<Cloth> SearchByTextAndPicTexture(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth);

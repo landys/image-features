@@ -5,15 +5,15 @@ using Zju.Dao;
 
 namespace Zju.Searcher
 {
-    public class HSVAynsColorSearcher : ColorSearcher
+    public class HSVAynsColorSearcher : ColorSearcher<float>
     {
-        public HSVAynsColorSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IBaseSearcher wrappedSearcher, int maxResult)
+        public HSVAynsColorSearcher(PicParam<float> picParam, float limit, DelCalcDist<float> calcDist, IBaseSearcher wrappedSearcher, int maxResult)
             : base(picParam, limit, calcDist, wrappedSearcher, maxResult)
         {
 
         }
 
-        public HSVAynsColorSearcher(PicParam picParam, float limit, DelCalcDist calcDist, IClothDao clothDao, int maxResult)
+        public HSVAynsColorSearcher(PicParam<float> picParam, float limit, DelCalcDist<float> calcDist, IClothDao clothDao, int maxResult)
             : base(picParam, limit, calcDist, clothDao, maxResult)
         {
 

@@ -44,7 +44,7 @@ namespace Zju.Util
             }
         }
 
-        public static float CalcManhattanDistance(int[] v1, int[] v2)
+        /*public static float CalcManhattanDistance(int[] v1, int[] v2)
         {
             if (v1 == null || v2 == null || v1.Length != v2.Length)
             {
@@ -60,7 +60,7 @@ namespace Zju.Util
 
             return mds / n;
         }
-
+        */
         public static float CalcManhattanDistance(float[] v1, float[] v2)
         {
             if (v1 == null || v2 == null || v1.Length != v2.Length)
@@ -69,6 +69,23 @@ namespace Zju.Util
             }
 
             float mds = 0.0f;
+            int n = v1.Length;
+            for (int i = 0; i < n; ++i)
+            {
+                mds += (v1[i] >= v2[i] ? v1[i] - v2[i] : v2[i] - v1[i]);
+            }
+
+            return mds / n;
+        }
+
+        public static double CalcManhattanDistance(double[] v1, double[] v2)
+        {
+            if (v1 == null || v2 == null || v1.Length != v2.Length)
+            {
+                return double.MaxValue;
+            }
+
+            double mds = 0.0;
             int n = v1.Length;
             for (int i = 0; i < n; ++i)
             {
@@ -97,6 +114,24 @@ namespace Zju.Util
             return mds / n;
         }
 
+        public static double CalcEuclidDistance(double[] v1, double[] v2)
+        {
+            if (v1 == null || v2 == null || v1.Length != v2.Length)
+            {
+                return double.MaxValue;
+            }
+
+            double mds = 0.0;
+            int n = v1.Length;
+            double t = 0.0f;
+            for (int i = 0; i < n; ++i)
+            {
+                t = v1[i] - v2[i];
+                mds += t * t;
+            }
+
+            return mds / n;
+        }
 
         public static float CalcGaborDistance(float[] v1, float[] v2)
         {
@@ -265,9 +300,18 @@ namespace Zju.Util
             {
                 cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
             }
-            if (null == cloth.TamuraVector)
+            /*if (null == cloth.TamuraVector)
             {
                 cloth.TamuraVector = ImageMatcherInst.ExtractTamuraVector(cloth.Path, 6);
+            }*/
+            if (null == cloth.MICannyVector)
+            {
+                cloth.MICannyVector = ImageMatcherInst.ExtractMICannyVector(cloth.Path);
+            }
+
+            if (null == cloth.MIHuVector)
+            {
+                cloth.MIHuVector = ImageMatcherInst.ExtractMIHuVector(cloth.Path);
             }
 
             //if (isGabor && null == cloth.GaborVector)

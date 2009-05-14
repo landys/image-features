@@ -5,7 +5,7 @@ using Zju.Dao;
 
 namespace Zju.Searcher
 {
-    public delegate float DelCalcDist(float[] v1, float[] v2);
+    public delegate T DelCalcDist<T>(T[] v1, T[] v2) where T : System.IComparable<T>;
 
     public abstract class BaseSearcher : IBaseSearcher
     {

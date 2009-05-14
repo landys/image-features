@@ -54,6 +54,9 @@ namespace Zju
 			// Moment Invariants using Canny descriptor, the size of dimensions is 7
 			array<double>^ ExtractMICannyVector(String^ imageFileName);
 
+			// Hu Moment Invariants, the size of dimensions is 7
+			array<double>^ ExtractMIHuVector(String^ imageFileName);
+
 			ImageMatcher();
 
 			~ImageMatcher();

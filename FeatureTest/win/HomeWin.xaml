@@ -51,11 +51,15 @@
                     <Label>RGBSeparateColor</Label>
                     <Label>HLSColor</Label>
                 </ComboBox>
-                <CheckBox Canvas.Left="516" Canvas.Top="19" Height="16" Width="72" IsEnabled="false">形状算法:</CheckBox>
-                <ComboBox Canvas.Left="594" Canvas.Top="37" Height="22" SelectedIndex="0" Width="127" IsEnabled="False">
+                <CheckBox Name="cbShapeAlgorithm" Canvas.Left="516" Canvas.Top="19" Height="16" Width="72">形状算法:</CheckBox>
+                <ComboBox Name="cmbShapeAlgorithm" Canvas.Left="594" Canvas.Top="37" Height="22" SelectedIndex="0" Width="127" SelectionChanged="cmbShapeAlgorithm_SelectionChanged">
+                    <Label>MIHu</Label>
+                    <Label>MICanny</Label>
+                    <Label>MIAll</Label>
+                    <Label>Fourier</Label>
                 </ComboBox>
                 <Label Canvas.Left="594" Canvas.Top="7" Height="28" Width="42">权重:</Label>
-                <TextBox Canvas.Left="634" Canvas.Top="9" Height="23" Name="txtShapeWeight" Width="87" IsEnabled="False"/>
+                <TextBox Canvas.Left="634" Canvas.Top="9" Height="23" Name="txtShapeWeight" Width="87" Text="1"/>
                 
                 <Button Canvas.Left="742" Canvas.Top="13" Height="39" Name="btnSearch" Width="106" Click="btnSearch_Click">搜索</Button>
             </Canvas>

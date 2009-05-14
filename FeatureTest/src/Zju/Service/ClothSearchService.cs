@@ -55,6 +55,9 @@ namespace Zju.Service
             algoMap.Add(AlgorithmType.HSVColor, SearchByPicHSVColor);
             algoMap.Add(AlgorithmType.HLSColor, SearchByPicHLSColor);
             algoMap.Add(AlgorithmType.Tamura, SearchByPicTamura);
+            algoMap.Add(AlgorithmType.MICanny, SearchByPicMICanny);
+            algoMap.Add(AlgorithmType.MICanny, SearchByPicMIHu);
+            
         }
 
         #region IClothSearchService Members
@@ -150,108 +153,119 @@ namespace Zju.Service
 
         public List<Cloth> SearchByPicRGBSeparateColor(Cloth keyCloth, int reSize)
         {
-            return new RGBSeparateColorSearcher(new PicParam(keyCloth.RGBSeparateColorVector, keyCloth.ColorNum), float.MaxValue/*colorMDLimit*/, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new RGBSeparateColorSearcher(new PicParam<float>(keyCloth.RGBSeparateColorVector, keyCloth.ColorNum), float.MaxValue/*colorMDLimit*/, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicRGBColor(Cloth keyCloth, int reSize)
         {
-            return new RGBColorSearcher(new PicParam(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new RGBColorSearcher(new PicParam<float>(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicHSVColor(Cloth keyCloth, int reSize)
         {
-            return new HSVColorSearcher(new PicParam(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new HSVColorSearcher(new PicParam<float>(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicHSVAynsColor(Cloth keyCloth, int reSize)
         {
-            return new HSVAynsColorSearcher(new PicParam(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new HSVAynsColorSearcher(new PicParam<float>(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicHLSColor(Cloth keyCloth, int reSize)
         {
-            return new HLSColorSearcher(new PicParam(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new HLSColorSearcher(new PicParam<float>(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicDaubechiesWavelet(Cloth keyCloth, int reSize)
         {
-            return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+            return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
                  clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicGabor(Cloth keyCloth, int reSize)
         {
-            return new GaborSearcher(new PicParam(keyCloth.GaborVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcGaborDistance, clothDao, reSize)
+            return new GaborSearcher(new PicParam<float>(keyCloth.GaborVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcGaborDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicGaborAndHSVAsyColor(Cloth keyCloth, int reSize)
         {
-            return new GaborSearcher(new PicParam(keyCloth.GaborVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
-                new HSVAynsColorSearcher(new PicParam(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize), reSize).Search();
+            return new GaborSearcher(new PicParam<float>(keyCloth.GaborVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+                new HSVAynsColorSearcher(new PicParam<float>(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize), reSize).Search();
         }
 
         public List<Cloth> SearchByPicCooccurrence(Cloth keyCloth, int reSize)
         {
-            return new CooccurrenceSearcher(new PicParam(keyCloth.CooccurrenceVector, keyCloth.ColorNum), float.MaxValue/*cooccurrenceMDLimit*/, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new CooccurrenceSearcher(new PicParam<float>(keyCloth.CooccurrenceVector, keyCloth.ColorNum), float.MaxValue/*cooccurrenceMDLimit*/, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 
         public List<Cloth> SearchByPicTamura(Cloth keyCloth, int reSize)
         {
-            return new TamuraSearcher(new PicParam(keyCloth.TamuraVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+            return new TamuraSearcher(new PicParam<float>(keyCloth.TamuraVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
-        
+
+        public List<Cloth> SearchByPicMICanny(Cloth keyCloth, int reSize)
+        {
+            return new MICannySearcher(new PicParam<double>(keyCloth.MICannyVector, keyCloth.ColorNum), double.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+                .Search();
+        }
+
+        public List<Cloth> SearchByPicMIHu(Cloth keyCloth, int reSize)
+        {
+            return new MIHuSearcher(new PicParam<double>(keyCloth.MIHuVector, keyCloth.ColorNum), double.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+                .Search();
+        }
 
         public List<Cloth> SearchByTextAndPicColor(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth)
         {
-            return new RGBColorSearcher(new PicParam(keyCloth.RGBColorVector, keyCloth.ColorNum), colorMDLimit, ClothUtil.CalcManhattanDistance,
+            return new RGBColorSearcher(new PicParam<float>(keyCloth.RGBColorVector, keyCloth.ColorNum), colorMDLimit, ClothUtil.CalcManhattanDistance,
                 new TextSearcher(new TextParam(words, colors, shapes), clothDao), 200).Search();
         }
 
         public List<Cloth> SearchByTextAndPicTexture(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth)
         {
-            return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), textureMDLimit, ClothUtil.CalcManhattanDistance,
+            return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), textureMDLimit, ClothUtil.CalcManhattanDistance,
                 new TextSearcher(new TextParam(words, colors, shapes), clothDao), 200).Search();
         }
 
         public List<Cloth> SearchTest(Cloth keyCloth)
         {
             ClothUtil.ExtractFeaturesNecessary(keyCloth, false);
-            return new RGBColorSearcher(new PicParam(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
-            //return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
-              //  new RGBColorSearcher(new PicParam(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
+            return new RGBColorSearcher(new PicParam<float>(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
+            //return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+              //  new RGBColorSearcher(new PicParam<float>(keyCloth.RGBColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
         }
 
         public List<Cloth> SearchTest2(Cloth keyCloth)
         {
             ClothUtil.ExtractFeaturesNecessary(keyCloth, false);
-            return new HSVAynsColorSearcher(new PicParam(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
-            //return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
-              //  new HSVAynsColorSearcher(new PicParam(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
+            return new HSVAynsColorSearcher(new PicParam<float>(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
+            //return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+              //  new HSVAynsColorSearcher(new PicParam<float>(keyCloth.HSVAynsColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
         }
 
         public List<Cloth> SearchTest3(Cloth keyCloth)
         {
             ClothUtil.ExtractFeaturesNecessary(keyCloth, false);
-            return new HSVColorSearcher(new PicParam(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
-            //return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
-              //  new HSVColorSearcher(new PicParam(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
+            return new HSVColorSearcher(new PicParam<float>(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
+            //return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+              //  new HSVColorSearcher(new PicParam<float>(keyCloth.HSVColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
         }
 
         public List<Cloth> SearchTest4(Cloth keyCloth)
         {
             ClothUtil.ExtractFeaturesNecessary(keyCloth, false);
-            return new HLSColorSearcher(new PicParam(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
-            //return new DaubechiesWaveletSearcher(new PicParam(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
-              //  new HLSColorSearcher(new PicParam(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
+            return new HLSColorSearcher(new PicParam<float>(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100).Search();
+            //return new DaubechiesWaveletSearcher(new PicParam<float>(keyCloth.DaubechiesWaveletVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance,
+              //  new HLSColorSearcher(new PicParam<float>(keyCloth.HLSColorVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, 100), 200).Search();
         }
 
         public float GetColorMDLimit()

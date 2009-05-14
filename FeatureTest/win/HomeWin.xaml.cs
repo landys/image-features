@@ -22,13 +22,13 @@ namespace FeatureTest
     /// </summary>
     public partial class HomeWin : Window
     {
-        private List<ColorItem> colorItems;
+        /*private List<ColorItem> colorItems;
 
         private List<ShapeItem> shapeItems;
 
         private List<ColorItem> modifyColorItems;
 
-        private List<ShapeItem> modifyShapeItems;
+        private List<ShapeItem> modifyShapeItems;*/
 
         private IClothLibService clothLibService;
 
@@ -46,9 +46,13 @@ namespace FeatureTest
 
         private AlgorithmType colorAType;
 
+        private AlgorithmType shapeAType;
+
         private AlgorithmType[] textureATypes;
 
         private AlgorithmType[] colorATypes;
+
+        private AlgorithmType[] shapeATypes;
 
         private OpenFileDialog dlgOpenKeyPic;
 
@@ -56,7 +60,7 @@ namespace FeatureTest
 
         private ProgressWin progressWin;
 
-        private MatchAlgorithmWin matchAlgorithmWin;
+        //private MatchAlgorithmWin matchAlgorithmWin;
 
         //private delegate void AsynOpenUI(int nTotal);
 
@@ -120,7 +124,7 @@ namespace FeatureTest
 
         public HomeWin()
         {
-            colorItems = ViewHelper.NewColorItems;
+            /*colorItems = ViewHelper.NewColorItems;
             shapeItems = ViewHelper.NewShapeItems;
             this.Resources.Add("colorItems", colorItems);
             this.Resources.Add("shapeItems", shapeItems);
@@ -128,13 +132,14 @@ namespace FeatureTest
             modifyColorItems = ViewHelper.NewColorItems;
             modifyShapeItems = ViewHelper.NewShapeItems;
             this.Resources.Add("modifyColorItems", modifyColorItems);
-            this.Resources.Add("modifyShapeItems", modifyShapeItems);
+            this.Resources.Add("modifyShapeItems", modifyShapeItems);*/
 
             textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.Tamura};
 
             colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
                 AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.RGBSeparateColor, AlgorithmType.HLSColor };
-            
+
+            shapeATypes = new AlgorithmType[] { AlgorithmType.MIHu, AlgorithmType.MICanny, AlgorithmType.MIAll, AlgorithmType.Fourier };
 
             InitializeComponent();
 
@@ -335,7 +340,7 @@ namespace FeatureTest
                 return;
             }
 
-            if (!(cbTextureAlgorithm.IsChecked == true || cbColorAlgorithm.IsChecked == true))
+            if (!(cbTextureAlgorithm.IsChecked == true || cbColorAlgorithm.IsChecked == true || cbShapeAlgorithm.IsChecked == true))
             {
                 MessageBox.Show("请先指定图像特征提取算法.", "搜索图片...");
                 return;
@@ -383,6 +388,11 @@ namespace FeatureTest
             {
                 algs.Add(colorAType);
                 weights.Add(convert2Float(txtColorWeight.Text));
+            }
+            if (cbShapeAlgorithm.IsChecked == true)
+            {
+                algs.Add(shapeAType);
+                weights.Add(convert2Float(txtShapeWeight.Text));
             }
 
             foreach (AlgorithmType at in algs)
@@ -479,6 +489,28 @@ namespace FeatureTest
                             if (keyCloth.TamuraVector == null)
                             {
                                 MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取TamuraVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.MICanny:
+                        if (null == keyCloth.MICannyVector)
+                        {
+                            keyCloth.MICannyVector = imageMatcher.ExtractMICannyVector(keyCloth.Path);
+                            if (keyCloth.MICannyVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取MICannyVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.MIHu:
+                        if (null == keyCloth.MIHuVector)
+                        {
+                            keyCloth.MIHuVector = imageMatcher.ExtractMIHuVector(keyCloth.Path);
+                            if (keyCloth.MIHuVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取MICannyVector...");
                                 return null;
                             }
                         }
@@ -635,7 +667,7 @@ namespace FeatureTest
 
             newCloth.ColorNum = colorNum;
             newCloth.Pattern = string.IsNullOrEmpty(txtModifyPattern.Text) ? null : txtModifyPattern.Text;
-            ColorEnum colors = ColorEnum.NONE;
+            /*ColorEnum colors = ColorEnum.NONE;
             foreach (ColorItem ci in modifyColorItems)
             {
                 if (ci.Selected)
@@ -653,7 +685,7 @@ namespace FeatureTest
                     shapes |= si.Value;
                 }
             }
-            newCloth.Shapes = shapes;
+            newCloth.Shapes = shapes;*/
 
             clothLibService.Update(selectedCloth, newCloth);
         }
@@ -706,6 +738,10 @@ namespace FeatureTest
             colorAType = colorATypes[cmbColorAlgorithm.SelectedIndex];
         }
 
+        private void cmbShapeAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            shapeAType = shapeATypes[cmbShapeAlgorithm.SelectedIndex];
+        }
 
         private void updateSearchButtonByPic()
         {
@@ -715,6 +751,6 @@ namespace FeatureTest
             {
                 btnSearch.IsEnabled = cando;
             }
-        }
+        }   
     }
 }
