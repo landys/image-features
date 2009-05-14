@@ -56,7 +56,7 @@ namespace Zju.Service
             algoMap.Add(AlgorithmType.HLSColor, SearchByPicHLSColor);
             algoMap.Add(AlgorithmType.Tamura, SearchByPicTamura);
             algoMap.Add(AlgorithmType.MICanny, SearchByPicMICanny);
-            algoMap.Add(AlgorithmType.MICanny, SearchByPicMIHu);
+            algoMap.Add(AlgorithmType.MIHu, SearchByPicMIHu);
             
         }
 
