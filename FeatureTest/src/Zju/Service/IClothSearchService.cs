@@ -9,6 +9,8 @@ namespace Zju.Service
     {
         List<Cloth> SearchByPicCombine(Cloth keyCloth, AlgorithmType[] aTypes, float[] weights);
 
+        List<Cloth> SearchByRandom(int reSize);
+
         List<Cloth> SearchByText(String words, ColorEnum colors, ShapeEnum shapes);
 
         List<Cloth> SearchByPicRGBSeparateColor(Cloth keyCloth, int reSize);
@@ -32,6 +34,8 @@ namespace Zju.Service
         List<Cloth> SearchByPicMICanny(Cloth keyCloth, int reSize);
 
         List<Cloth> SearchByPicMIHu(Cloth keyCloth, int reSize);
+
+        List<Cloth> SearchByPicFourier(Cloth keyCloth, int reSize);
 
         List<Cloth> SearchByTextAndPicColor(String words, ColorEnum colors, ShapeEnum shapes, Cloth keyCloth);
 

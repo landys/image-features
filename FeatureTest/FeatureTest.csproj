@@ -116,6 +116,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FourierSearcher.cs" />
+    <Compile Include="RandomSearcher.cs" />
     <Compile Include="src\Zju\Searcher\MIHuSearcher.cs" />
     <Compile Include="src\Zju\Searcher\MICannySearcher.cs" />
     <Compile Include="src\Zju\Searcher\ShapeSearcher.cs" />

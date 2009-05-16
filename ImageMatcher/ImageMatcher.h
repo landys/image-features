@@ -57,6 +57,9 @@ namespace Zju
 			// Hu Moment Invariants, the size of dimensions is 7
 			array<double>^ ExtractMIHuVector(String^ imageFileName);
 
+			// tarmura texture, n*2 is the size of dimensions
+			array<float>^ ExtractFourierVector(String^ imageFileName, int n);
+
 			ImageMatcher();
 
 			~ImageMatcher();

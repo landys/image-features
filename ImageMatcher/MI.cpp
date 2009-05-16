@@ -2,8 +2,9 @@
 #include "cv.h"
 #include "cxcore.h" 
 #include "highgui.h" 
+#include "MI.h"
 
-int extractMIHu(const char* imagenamefile, double* feature)
+int extractMI(const char* imagenamefile, bool isCanny, double* feature)
 {
 	IplImage* pImg = cvLoadImage(imagenamefile, CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -11,6 +12,11 @@ int extractMIHu(const char* imagenamefile, double* feature)
 	{
 		return 0;
 	}
+
+	if (isCanny)
+	{
+		cvCanny(pImg, pImg, 50, 150, 3);
+	} 
 
 	CvMoments m;
 	cvMoments(pImg, &m, 0);

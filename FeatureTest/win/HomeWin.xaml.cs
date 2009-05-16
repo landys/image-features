@@ -139,11 +139,11 @@ namespace FeatureTest
             colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
                 AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.RGBSeparateColor, AlgorithmType.HLSColor };
 
-            shapeATypes = new AlgorithmType[] { AlgorithmType.MIHu, AlgorithmType.MICanny, AlgorithmType.MIAll, AlgorithmType.Fourier };
+            shapeATypes = new AlgorithmType[] { AlgorithmType.Fourier, AlgorithmType.MIHu, AlgorithmType.MICanny, AlgorithmType.MIAll };
 
             InitializeComponent();
 
-            btnSearch.IsEnabled = false;
+            //btnSearch.IsEnabled = false;
 
             dlgOpenKeyPic = newOpenFileDialog();
             dlgOpenKeyPic.Title = "请选择关键图";
@@ -334,20 +334,22 @@ namespace FeatureTest
 
 		private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
-            {
-                MessageBox.Show("图片搜索必须先指定关键图.", "搜索图片...");
-                return;
-            }
-
             if (!(cbTextureAlgorithm.IsChecked == true || cbColorAlgorithm.IsChecked == true || cbShapeAlgorithm.IsChecked == true))
             {
-                MessageBox.Show("请先指定图像特征提取算法.", "搜索图片...");
-                return;
+                lblSearchResultInfo.Content = "正在随机获得图像...";
+                searchedClothes = clothSearchService.SearchByRandom(200);
             }
+            else
+            {
+                if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
+                {
+                    MessageBox.Show("图片搜索必须先指定关键图.", "搜索图片...");
+                    return;
+                }
 
-            lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
-            searchedClothes = searchByPic();
+                lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
+                searchedClothes = searchByPic();
+            }
             
             updatePicResults();
         }
@@ -510,7 +512,18 @@ namespace FeatureTest
                             keyCloth.MIHuVector = imageMatcher.ExtractMIHuVector(keyCloth.Path);
                             if (keyCloth.MIHuVector == null)
                             {
-                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取MICannyVector...");
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取MIHuVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.Fourier:
+                        if (null == keyCloth.FourierVector)
+                        {
+                            keyCloth.FourierVector = imageMatcher.ExtractFourierVector(keyCloth.Path, 20);
+                            if (keyCloth.FourierVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取FourierVector...");
                                 return null;
                             }
                         }
@@ -745,12 +758,12 @@ namespace FeatureTest
 
         private void updateSearchButtonByPic()
         {
-            bool cando = canSearchByPic();
+            /*bool cando = canSearchByPic();
 
             if (btnSearch.IsEnabled != cando)
             {
                 btnSearch.IsEnabled = cando;
-            }
+            }*/
         }   
     }
 }

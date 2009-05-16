@@ -7,8 +7,9 @@
 #include "ImageMatcher.h"
 #include "GetFeature.h"
 #include "../Tamura/extracttamura.h"
-#include "../MICanny/extractMICanny.h"
-#include "MIHu.h"
+//#include "../MICanny/extractMICanny.h"
+#include "MI.h"
+#include "Fourier.h"
 #include <cmath>
 
 #pragma comment(lib, "cxcore.lib")
@@ -648,7 +649,7 @@ namespace Zju
 			double* feature = new double[n];
 			try 
 			{
-				extractMICanny(fileName, feature);
+				extractMI(fileName, true, feature);
 				shapeVector = to_double_array(feature, n);
 			}
 			catch (Exception^ e)
@@ -672,8 +673,32 @@ namespace Zju
 			double* feature = new double[n];
 			try 
 			{
-				extractMIHu(fileName, feature);
+				extractMI(fileName, false, feature);
 				shapeVector = to_double_array(feature, n);
+			}
+			catch (Exception^ e)
+			{
+				// TODO do some log
+			}
+
+			Marshal::FreeHGlobal(ip);
+			delete[] feature;
+
+			return shapeVector;
+		}
+
+		array<float>^ ImageMatcher::ExtractFourierVector(String^ imageFileName, int n)
+		{
+			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
+			const char* fileName = static_cast<const char*>(ip.ToPointer());
+
+			array<float>^ shapeVector = nullptr;
+			int n2 = n * 2;
+			double* feature = new double[n2];
+			try 
+			{
+				extractFourier(fileName, n, feature);
+				shapeVector = to_array(feature, n2);
 			}
 			catch (Exception^ e)
 			{

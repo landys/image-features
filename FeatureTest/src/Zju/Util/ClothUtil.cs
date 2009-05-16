@@ -314,6 +314,11 @@ namespace Zju.Util
                 cloth.MIHuVector = ImageMatcherInst.ExtractMIHuVector(cloth.Path);
             }
 
+            if (null == cloth.FourierVector)
+            {
+                cloth.FourierVector = ImageMatcherInst.ExtractFourierVector(cloth.Path, 20);
+            }
+
             //if (isGabor && null == cloth.GaborVector)
             //{
             //    cloth.GaborVector = ImageMatcherInst.ExtractGaborVector(cloth.Path);

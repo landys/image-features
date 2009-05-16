@@ -57,7 +57,7 @@ namespace Zju.Service
             algoMap.Add(AlgorithmType.Tamura, SearchByPicTamura);
             algoMap.Add(AlgorithmType.MICanny, SearchByPicMICanny);
             algoMap.Add(AlgorithmType.MIHu, SearchByPicMIHu);
-            
+            algoMap.Add(AlgorithmType.Fourier, SearchByPicFourier);
         }
 
         #region IClothSearchService Members
@@ -146,6 +146,11 @@ namespace Zju.Service
             return resultClothes;
         }
 
+        public List<Cloth> SearchByRandom(int reSize)
+        {
+            return new RandomSearcher(clothDao, reSize).Search();
+        }
+
         public List<Cloth> SearchByText(string words, ColorEnum colors, ShapeEnum shapes)
         {
             return new TextSearcher(new TextParam(words, colors, shapes), clothDao).Search();
@@ -221,6 +226,12 @@ namespace Zju.Service
         public List<Cloth> SearchByPicMIHu(Cloth keyCloth, int reSize)
         {
             return new MIHuSearcher(new PicParam<double>(keyCloth.MIHuVector, keyCloth.ColorNum), double.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
+                .Search();
+        }
+
+        public List<Cloth> SearchByPicFourier(Cloth keyCloth, int reSize)
+        {
+            return new FourierSearcher(new PicParam<float>(keyCloth.FourierVector, keyCloth.ColorNum), float.MaxValue, ClothUtil.CalcEuclidDistance, clothDao, reSize)
                 .Search();
         }
 
