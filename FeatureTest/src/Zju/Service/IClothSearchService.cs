@@ -7,11 +7,11 @@ namespace Zju.Service
 {
     public interface IClothSearchService
     {
-        List<Cloth> SearchByPicCombine(Cloth keyCloth, AlgorithmType[] aTypes, float[] weights);
+        List<Cloth> SearchByPicCombine(Cloth keyCloth, AlgorithmType[] aTypes, float[] weights, int[] categories);
 
-        List<Cloth> SearchByRandom(int reSize);
+        List<Cloth> SearchByRandom(int[] categories, int reSize);
 
-        List<Cloth> SearchByText(String words, ColorEnum colors, ShapeEnum shapes);
+        /*List<Cloth> SearchByText(String words, ColorEnum colors, ShapeEnum shapes);
 
         List<Cloth> SearchByPicRGBSeparateColor(Cloth keyCloth, int reSize);
 
@@ -49,7 +49,7 @@ namespace Zju.Service
 
         List<Cloth> SearchTest3(Cloth keyCloth);
 
-        List<Cloth> SearchTest4(Cloth keyCloth);
+        List<Cloth> SearchTest4(Cloth keyCloth);*/
 
         float GetColorMDLimit();
         void SetColorMDLimit(float colorMDLimit);

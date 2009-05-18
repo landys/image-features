@@ -75,6 +75,7 @@ namespace Zju.Dao
             BitIndex shapeIndex = root.ShapeIndex;
             FieldIndex pathIndex = root.PathIndex;
             FieldIndex colorNumIndex = root.ColorNumIndex;
+            FieldIndex categoryIndex = root.CategoryIndex;
 
             storage.BeginThreadTransaction(TransactionMode.Exclusive);
             try
@@ -101,6 +102,14 @@ namespace Zju.Dao
                     colorNumIndex.Remove(cloth);
                     cloth.ColorNum = newCloth.ColorNum;
                     colorNumIndex.Put(cloth);
+                }
+
+                // Category
+                if (cloth.Category != newCloth.Category)
+                {
+                    categoryIndex.Remove(cloth);
+                    cloth.Category = newCloth.Category;
+                    categoryIndex.Put(cloth);
                 }
 
                 // Path
@@ -262,6 +271,7 @@ namespace Zju.Dao
             root.ClothOidIndex.Remove(cloth);
             root.PatternIndex.Remove(cloth);
             root.ColorNumIndex.Remove(cloth);
+            root.CategoryIndex.Remove(cloth);
             root.PathIndex.Remove(cloth);
         }
 
@@ -286,13 +296,26 @@ namespace Zju.Dao
             return (Cloth)root.PathIndex.Get(path);
         }
 
-        public List<Cloth> FindByClothNum(int clothNum)
+        public List<Cloth> FindByColorNum(int colorNum)
         {
             Storage storage = DaoHelper.Instance.DbStorage;
             ClothRoot root = (ClothRoot)storage.Root;
 
             List<Cloth> clothes = new List<Cloth>();
-            foreach (Cloth cloth in root.ColorNumIndex.Range(clothNum, clothNum))
+            foreach (Cloth cloth in root.ColorNumIndex.Range(colorNum, colorNum))
+            {
+                clothes.Add(cloth);
+            }
+            return clothes;
+        }
+
+        public List<Cloth> FindByCategory(int category)
+        {
+            Storage storage = DaoHelper.Instance.DbStorage;
+            ClothRoot root = (ClothRoot)storage.Root;
+
+            List<Cloth> clothes = new List<Cloth>();
+            foreach (Cloth cloth in root.CategoryIndex.Range(category, category))
             {
                 clothes.Add(cloth);
             }
@@ -441,6 +464,7 @@ namespace Zju.Dao
             clothOidIndex.Set(cloth);
             root.PathIndex.Set(cloth);
             root.ColorNumIndex.Put(cloth);
+            root.CategoryIndex.Put(cloth);
             if (cloth.Pattern != null)
             {
                 root.PatternIndex.Put(cloth);

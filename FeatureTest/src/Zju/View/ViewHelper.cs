@@ -89,6 +89,41 @@ namespace Zju.View
         }
     }
 
+    public class CategoryItem : INotifyPropertyChanged
+    {
+        private String name;
+        private bool selected;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public String Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+
+        public int Value { get; set; }
+
+        public Boolean Selected
+        {
+            get { return selected; }
+            set
+            {
+                selected = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Selected"));
+                }
+            }
+        }
+    }
+
     public sealed class ViewHelper
     {  
 
@@ -121,6 +156,21 @@ namespace Zju.View
                 }
 
                 return shapeItems;
+            }
+
+        }
+
+        public static List<CategoryItem> NewCategoryItems
+        {
+            get
+            {
+                List<CategoryItem> categoryItems = new List<CategoryItem>();
+                foreach (String s in SearchConstants.CATEGORY_ALL)
+                {
+                    categoryItems.Add(new CategoryItem { Name = s, Value = ClothUtil.calcCategoryValue(s), Selected = false });
+                }
+
+                return categoryItems;
             }
 
         }

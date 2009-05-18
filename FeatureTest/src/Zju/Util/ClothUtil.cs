@@ -329,11 +329,34 @@ namespace Zju.Util
 
         /// <summary>
         /// Extract pattern string from the picture name. I.e.
-        /// C;\a\bcd.jpg -> bcd
+        /// C;\man t-shirt\bcd.jpg -> "man t-shirt"
         /// </summary>
         /// <param name="picName"></param>
         /// <returns></returns>
         public static string ExtractPattern(string picName)
+        {
+            if (string.IsNullOrEmpty(picName))
+            {
+                return null;
+            }
+
+            int i = picName.LastIndexOfAny(new char[] { '/', '\\' });
+            if (i <= 0)
+            {
+                return null;
+            }
+            int j = picName.LastIndexOfAny(new char[] { '/', '\\' }, i - 1);
+
+            return i - j - 1 > 0 ? picName.Substring(j + 1, i - j - 1) : null;
+        }
+
+        /// <summary>
+        /// Extract picture name string from the picture file name. I.e.
+        /// C;\a\bcd.jpg -> bcd
+        /// </summary>
+        /// <param name="picName"></param>
+        /// <returns></returns>
+        public static string ExtractName(string picName)
         {
             if (string.IsNullOrEmpty(picName))
             {
@@ -355,7 +378,8 @@ namespace Zju.Util
 
             cloth.Path = picName;
             cloth.Pattern = ClothUtil.ExtractPattern(cloth.Path);
-            cloth.Name = cloth.Pattern;
+            cloth.Category = ClothUtil.calcCategoryValue(cloth.Pattern);
+            cloth.Name = ClothUtil.ExtractName(cloth.Path);
 
             //ClothUtil.Log.WriteLine("begin ExtractFeatures");
             ClothUtil.ExtractFeaturesNecessary(cloth, isGabor);
@@ -381,6 +405,84 @@ namespace Zju.Util
                 }
             }
             return count;
+        }
+
+        public static int calcCategoryValue(string strCategory)
+        {
+            if (strCategory == null || strCategory.Trim().Length == 0)
+            {
+                return 0;
+            }
+
+            string[] ss = strCategory.Trim().Split(new char[] { SearchConstants.CATEGORY_GAP });
+            Dictionary<String, int>[] dics = new Dictionary<string,int>[] { SearchConstants.INVERSE_CATEGORY_MAP_1ST,
+                SearchConstants.INVERSE_CATEGORY_MAP_2ND, SearchConstants.INVERSE_CATEGORY_MAP_3RD };
+            int[] defValues = new int[] { (int) SearchConstants.DEFAULT_CATEGORY_1ST, 
+                (int) SearchConstants.DEFAULT_CATEGORY_2ND, (int) SearchConstants.DEFAULT_CATEGORY_3RD };
+            int[] coefs = new int[] { SearchConstants.CATEGORY_COEF * SearchConstants.CATEGORY_COEF, SearchConstants.CATEGORY_COEF, 1 };
+
+            int valCategory = 0;
+            for (int i = 0; i < ss.Length && i < dics.Length; ++i)
+            {
+                int t = 0;
+                if (dics[i].ContainsKey(ss[i]))
+                {
+                    t = (int)(dics[i][ss[i]]);
+                }
+                else
+                {
+                    t = (int)(defValues[i]);
+                }
+                valCategory += coefs[i] * t;
+            }
+
+            return valCategory;
+        }
+
+        public static string calcCategoryString(int valCategory)
+        {
+            if (valCategory <= 0)
+            {
+                return SearchConstants.DEFAULT_CATEGORY_NAME;
+            }
+
+            Dictionary<int, string>[] dics = new Dictionary<int, string>[] { SearchConstants.CATEGORY_MAP_1ST,
+                SearchConstants.CATEGORY_MAP_2ND, SearchConstants.CATEGORY_MAP_3RD };
+            int[] coefs = new int[] { SearchConstants.CATEGORY_COEF * SearchConstants.CATEGORY_COEF, SearchConstants.CATEGORY_COEF, 1 };
+
+            string strCategory = "";
+            for (int i = 0; i < dics.Length; ++i)
+            {
+                int t = valCategory / coefs[i];
+                if (t == 0)
+                {
+                    break;
+                }
+
+                if (i > 0)
+                {
+                    strCategory += SearchConstants.CATEGORY_GAP;
+                }
+
+                if (dics[i].ContainsKey(t))
+                {
+                    strCategory += dics[i][t];
+                }
+                else
+                {
+                    strCategory += SearchConstants.DEFAULT_CATEGORY_NAME;
+                }
+
+                valCategory %= coefs[i];
+            }
+
+
+            if (strCategory.Length == 0)
+            {
+                strCategory = SearchConstants.DEFAULT_CATEGORY_NAME;
+            }
+
+            return strCategory;
         }
     }
 }

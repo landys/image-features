@@ -52,7 +52,9 @@ namespace Zju.Dao
 
         Cloth FindByPath(string path);
 
-        List<Cloth> FindByClothNum(int clothNum);
+        List<Cloth> FindByColorNum(int colorNum);
+
+        List<Cloth> FindByCategory(int category);
 
         /// <summary>
         /// Find list of Cloth object by colors.

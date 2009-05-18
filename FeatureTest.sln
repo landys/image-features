@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCSharp", "TestCSharp\Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MIHu", "MIHu\MIHu.vcproj", "{B167DF94-54FC-4489-AFE6-77225245F438}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ResizeImages", "ResizeImages\ResizeImages.vcproj", "{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +136,16 @@ Global
 		{B167DF94-54FC-4489-AFE6-77225245F438}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{B167DF94-54FC-4489-AFE6-77225245F438}.Release|Win32.ActiveCfg = Release|Win32
 		{B167DF94-54FC-4489-AFE6-77225245F438}.Release|Win32.Build.0 = Release|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Debug|Win32.Build.0 = Debug|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Release|Any CPU.ActiveCfg = Release|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Release|Win32.ActiveCfg = Release|Win32
+		{830E0AD4-D39F-4C57-AC73-F1ED1717EC8B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

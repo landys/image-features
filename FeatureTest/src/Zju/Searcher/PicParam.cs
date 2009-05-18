@@ -11,23 +11,24 @@ namespace Zju.Searcher
 
         }
 
-        public PicParam(T[] feature, int clothNum)
+        public PicParam(T[] feature, int colorNum)
         {
             this.Feature = feature;
-            this.ClothNum = clothNum;
+            this.ColorNum = colorNum;
+            this.Categories = null;
         }
 
-        public T[] Feature
+        public PicParam(T[] feature, int colorNum, int[] categories)
         {
-            get;
-            set;
+            this.Feature = feature;
+            this.ColorNum = colorNum;
+            this.Categories = categories;
         }
 
+        public T[] Feature { get; set; }
 
-        public int ClothNum
-        {
-            get;
-            set;
-        }
+        public int ColorNum { get; set; }
+
+        public int[] Categories { get; set; }
     }
 }

@@ -86,7 +86,7 @@
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(271, 16);
             this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "面料花型检索系统";
+            this.labelProductName.Text = "服装检索系统";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVersion
@@ -98,7 +98,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(271, 16);
             this.labelVersion.TabIndex = 0;
-            this.labelVersion.Text = "Version 1.0.0.0";
+            this.labelVersion.Text = "Version 1.0.0.0 Alpha";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelCopyright
@@ -164,7 +164,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "关于面料花型检索系统";
+            this.Text = "关于服装检索系统";
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();

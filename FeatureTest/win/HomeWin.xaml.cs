@@ -30,6 +30,9 @@ namespace FeatureTest
 
         private List<ShapeItem> modifyShapeItems;*/
 
+        private List<CategoryItem> categoryItems;
+
+
         private IClothLibService clothLibService;
 
         private IClothSearchService clothSearchService;
@@ -134,6 +137,9 @@ namespace FeatureTest
             this.Resources.Add("modifyColorItems", modifyColorItems);
             this.Resources.Add("modifyShapeItems", modifyShapeItems);*/
 
+            categoryItems = ViewHelper.NewCategoryItems;
+            this.Resources.Add("categoryItems", categoryItems);
+
             textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.Tamura};
 
             colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
@@ -163,7 +169,7 @@ namespace FeatureTest
             imageMatcher = ClothUtil.ImageMatcherInst;
 
             // temp
-            txtModifyName.IsEnabled = false;
+            //txtModifyName.IsEnabled = false;
 
             //picNames = new List<string>();
         }
@@ -239,27 +245,37 @@ namespace FeatureTest
             }
         }
 
+        // import files under the folder recursively, subfolder is included
         private void btnToolImportFolder_Click(object sender, RoutedEventArgs e)
         {
             if (dlgOpenPicFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 String selectedPath = dlgOpenPicFolder.SelectedPath;
-                string[] jpgFiles = Directory.GetFiles(selectedPath, "*.jpg");
-                string[] tifFiles = Directory.GetFiles(selectedPath, "*.tif");
-                string[] pngFiles = Directory.GetFiles(selectedPath, "*.png");
-                string[] bmpFiles = Directory.GetFiles(selectedPath, "*.bmp");
-                int nFiles = jpgFiles.Length + tifFiles.Length + pngFiles.Length + bmpFiles.Length;
-                if (nFiles == 0)
+
+                Queue<string> qp = new Queue<string>();
+                qp.Enqueue(selectedPath);
+                List<String> picNames = new List<string>();
+                while (qp.Count > 0)
+                {
+                    string path = qp.Dequeue();
+
+                    picNames.AddRange(Directory.GetFiles(path, "*.jpg"));
+                    picNames.AddRange(Directory.GetFiles(path, "*.tif"));
+                    picNames.AddRange(Directory.GetFiles(path, "*.png"));
+                    picNames.AddRange(Directory.GetFiles(path, "*.bmp"));
+
+                    string[] dirs = Directory.GetDirectories(path);
+                    foreach (string dir in dirs)
+                    {
+                        qp.Enqueue(dir);
+                    }
+                }
+
+                if (picNames.Count == 0)
                 {
                     MessageBox.Show("您选择的文件夹中未包含任何图片, 请重新选择.", "导入图片...");
                     return;
                 }
-
-                List<String> picNames = new List<string>(nFiles);
-                picNames.AddRange(jpgFiles);
-                picNames.AddRange(tifFiles);
-                picNames.AddRange(pngFiles);
-                picNames.AddRange(bmpFiles);
 
                 // save to database and show progress bar asynchronously.
                 asynImportClothPics(picNames);
@@ -334,10 +350,19 @@ namespace FeatureTest
 
 		private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            List<int> categories = new List<int>();
+            foreach (CategoryItem ci in categoryItems)
+            {
+                if (ci.Selected)
+                {
+                    categories.Add(ci.Value);
+                }
+            }
+
             if (!(cbTextureAlgorithm.IsChecked == true || cbColorAlgorithm.IsChecked == true || cbShapeAlgorithm.IsChecked == true))
             {
                 lblSearchResultInfo.Content = "正在随机获得图像...";
-                searchedClothes = clothSearchService.SearchByRandom(200);
+                searchedClothes = clothSearchService.SearchByRandom(categories.ToArray(), 200);
             }
             else
             {
@@ -348,7 +373,7 @@ namespace FeatureTest
                 }
 
                 lblSearchResultInfo.Content = "正在通过图片内容搜索请稍候...";
-                searchedClothes = searchByPic();
+                searchedClothes = searchByPic(categories.ToArray());
             }
             
             updatePicResults();
@@ -372,7 +397,7 @@ namespace FeatureTest
         /// 
         /// </summary>
         /// <returns>Result list. Null if no search executed.</returns>
-        private List<Cloth> searchByPic()
+        private List<Cloth> searchByPic(int[] categories)
         {
             if (null == keyCloth || string.IsNullOrEmpty(keyCloth.Path))
             {
@@ -530,8 +555,8 @@ namespace FeatureTest
                         break;
                 }
             }
-            
-            return clothSearchService.SearchByPicCombine(keyCloth, algs.ToArray(), weights.ToArray());
+
+            return clothSearchService.SearchByPicCombine(keyCloth, algs.ToArray(), weights.ToArray(), categories);
         }
 
         /// <summary>
@@ -620,14 +645,15 @@ namespace FeatureTest
 
             selectedCloth = searchedClothes[int.Parse(image.Name.Substring(imageNamePrefix.Length))];
 
-            txtModifyPattern.Text = string.IsNullOrEmpty(selectedCloth.Pattern) ? "" : selectedCloth.Pattern;
+            txtModifyName.Text = selectedCloth.Name;
 
-            txtModifyName.Text = selectedCloth.ColorNum.ToString();
+            txtModifyCategory.Text = ClothUtil.calcCategoryString(selectedCloth.Category);
+
+            txtModifyColorNum.Text = selectedCloth.ColorNum.ToString();
             
             //txtModifyName.IsEnabled = true;
-            txtModifyPattern.IsEnabled = true;
             btnResultDelete.IsEnabled = true;
-            btnResultModify.IsEnabled = true;
+            //btnResultModify.IsEnabled = true;
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -648,8 +674,10 @@ namespace FeatureTest
             txtModifyName.Text = "";
             //txtModifyName.IsEnabled = false;
 
-            txtModifyPattern.Text = "";
-            txtModifyPattern.IsEnabled = false;
+            txtModifyCategory.Text = "";
+            //txtModifyPattern.IsEnabled = false;
+
+            txtModifyColorNum.Text = "";
 
             btnResultDelete.IsEnabled = false;
             btnResultModify.IsEnabled = false;
@@ -668,9 +696,9 @@ namespace FeatureTest
             int colorNum = 0;
             try
             {
-                if (!string.IsNullOrEmpty(txtModifyName.Text.Trim()))
+                if (!string.IsNullOrEmpty(txtModifyColorNum.Text.Trim()))
                 {
-                    colorNum = int.Parse(txtModifyName.Text.Trim());
+                    colorNum = int.Parse(txtModifyColorNum.Text.Trim());
                 }
             }
             catch (Exception)
@@ -679,7 +707,7 @@ namespace FeatureTest
             }
 
             newCloth.ColorNum = colorNum;
-            newCloth.Pattern = string.IsNullOrEmpty(txtModifyPattern.Text) ? null : txtModifyPattern.Text;
+            //newCloth.Pattern = string.IsNullOrEmpty(txtModifyPattern.Text) ? null : txtModifyPattern.Text;
             /*ColorEnum colors = ColorEnum.NONE;
             foreach (ColorItem ci in modifyColorItems)
             {
@@ -764,6 +792,21 @@ namespace FeatureTest
             {
                 btnSearch.IsEnabled = cando;
             }*/
-        }   
+        }
+
+        private void chkCategoryInput_Click(object sender, RoutedEventArgs e)
+        {
+            String values = "";
+
+            foreach (CategoryItem ci in categoryItems)
+            {
+                if (ci.Selected)
+                {
+                    values += String.IsNullOrEmpty(values) ? ci.Name : "," + ci.Name;
+                }
+            }
+
+            cmbCategoryInput.Text = values;
+        }
     }
 }

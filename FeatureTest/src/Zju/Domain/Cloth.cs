@@ -16,7 +16,7 @@ namespace Zju.Domain
         private String name;
 
         /// <summary>
-        /// Pattern of the cloth, maybe the file name.
+        /// Pattern of the cloth, maybe the last directory name.
         /// </summary>
         private String pattern;
 
@@ -69,7 +69,12 @@ namespace Zju.Domain
         /// <summary>
         /// Color number in the cloth.
         /// </summary>
-        private int colorNum; 
+        private int colorNum;
+
+        /// <summary>
+        /// Category of the clothes.
+        /// </summary>
+        private int category;
 
 #endregion
 
@@ -193,6 +198,12 @@ namespace Zju.Domain
             get { return colorNum; }
             set { colorNum = value; }
         }
+
+        public int Category
+        {
+            get { return category; }
+            set { category = value; }
+        }
 #endregion
         
         public Cloth()
@@ -222,7 +233,8 @@ namespace Zju.Domain
             this.mIAllVector = cloth.MIAllVector;
             this.fourierVector = cloth.FourierVector;
             this.updateTime = cloth.UpdateTime;
-            this.colorNum = cloth.colorNum;
+            this.colorNum = cloth.ColorNum;
+            this.category = cloth.Category;
         }
         
         public Cloth(String name, String pattern, String path, ColorEnum colors, ShapeEnum shapes)

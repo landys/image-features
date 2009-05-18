@@ -8,10 +8,12 @@ namespace Zju.Searcher
 {
     public class RandomSearcher : BaseSearcher
     {
-        public RandomSearcher(IClothDao clothDao, int maxResult)
+        private int[] categories;
+
+        public RandomSearcher(IClothDao clothDao, int[] categories, int maxResult)
             : base(null, clothDao, maxResult)
         {
-
+            this.categories = categories;
         }
 
         public override List<Cloth> Search()
@@ -19,7 +21,25 @@ namespace Zju.Searcher
             List<Cloth> clothes = null;
             if (clothDao != null)
             {
-                clothes = clothDao.FindAll();
+                if (categories != null && categories.Length > 0)
+                {
+                    foreach (int category in categories)
+                    {
+                        List<Cloth> tcs = clothDao.FindByCategory(category);
+                        if (clothes == null)
+                        {
+                            clothes = tcs;
+                        }
+                        else
+                        {
+                            clothes.AddRange(tcs);
+                        }
+                    }
+                }
+                else
+                {
+                    clothes = clothDao.FindAll();
+                }
             }
 
             if (null == clothes)

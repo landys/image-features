@@ -39,9 +39,28 @@ namespace Zju.Searcher
             }
             else if (clothDao != null)
             {
-                if (picParam.ClothNum > 0)
+                /*if (picParam.ColorNum > 0)
                 {
-                    clothes = clothDao.FindByClothNum(picParam.ClothNum);
+                    clothes = clothDao.FindByColorNum(picParam.ColorNum);
+                }
+                else
+                {
+                    clothes = clothDao.FindAll();
+                }*/
+                if (picParam.Categories != null && picParam.Categories.Length > 0)
+                {
+                    foreach (int category in picParam.Categories)
+                    {
+                        List<Cloth> tcs = clothDao.FindByCategory(category);
+                        if (clothes == null)
+                        {
+                            clothes = tcs;
+                        }
+                        else
+                        {
+                            clothes.AddRange(tcs);
+                        }
+                    }
                 }
                 else
                 {
