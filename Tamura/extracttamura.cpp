@@ -1,12 +1,16 @@
 #include "extracttamura.h"
 #include "imagelib.h"
 #include "tamurafeature.h"
-#include <algorithm>
+#include <stdio.h>
+//#include <algorithm>
 
 extern "C" DLL_EXPORT int extractTamura(const char* imagenamefile, int n, double* feature)
 {
 	ImageFeature im;
-	im.load(imagenamefile);
+	if (!im.load(imagenamefile))
+	{
+		return 0;
+	}
 
 	ImageFeature tamuraImage = calculate(im);
 	normalize(tamuraImage);
@@ -15,5 +19,5 @@ extern "C" DLL_EXPORT int extractTamura(const char* imagenamefile, int n, double
 
 	copy(h.ndata().begin(), h.ndata().end(), feature);
 	
-	return 0;
+	return 1;
 }
