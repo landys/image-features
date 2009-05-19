@@ -5,6 +5,7 @@ using namespace std;
 
 #pragma comment(lib, "CORE_RL_Magick++_.lib")
 
+// the imgsfile should utf-8 encoded.
 void resize(const char* imgsfile)
 {
 	

@@ -84,6 +84,12 @@ namespace Zju
 			array<float>^ to_array(Cooccurrence::Pic_WLType* picwl);
 
 			int calcHSVIndex(float h, float s, float v);
+
+			// use utf8 to encode the string and store as char*. for windows, #include <wtypes.h>.
+			// not support linux, ps. iconv can do the same thing in linux.
+			// src -- a string to be converted, may contains characters like Chinese.
+			// return -- a point to a string which allocated in heap, it should be delete[] outside the function.
+			char* acp2utf8(const char* src);
 		};
 	}
 }

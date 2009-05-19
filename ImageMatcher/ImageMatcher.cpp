@@ -11,6 +11,10 @@
 #include "MI.h"
 #include "Fourier.h"
 #include <cmath>
+#include <cstring>
+#ifdef _WIN32
+#include <wtypes.h>
+#endif // _WIN32
 
 #pragma comment(lib, "cxcore.lib")
 #pragma comment(lib, "cv.lib")
@@ -618,13 +622,14 @@ namespace Zju
 		{
 			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
 			const char* fileName = static_cast<const char*>(ip.ToPointer());
+			char* fnUtf8 = acp2utf8(fileName);
 
 			array<float>^ textureVector = nullptr;
 			int n3 = n * n * n;
 			double* feature = new double[n3];
 			try 
 			{
-				extractTamura(fileName, n, feature);
+				extractTamura(fnUtf8, n, feature);
 				textureVector = to_array(feature, n3);
 			}
 			catch (Exception^ e)
@@ -633,6 +638,7 @@ namespace Zju
 			}
 
 			Marshal::FreeHGlobal(ip);
+			delete[] fnUtf8;
 			delete[] feature;
 
 			return textureVector;
@@ -792,6 +798,45 @@ namespace Zju
 			}
 
 			return textureVector;
+		}
+
+		// use utf8 to encode the string and store as char*. for windows, #include <wtypes.h>.
+		// not support linux, ps. iconv can do the same thing in linux.
+		// src -- a string to be converted, may contains characters like Chinese.
+		// return -- a point to a string which allocated in heap, it should be delete[] outside the function.
+		char* ImageMatcher::acp2utf8(const char* src)
+		{
+#ifdef _WIN32
+			int len = strlen(src);
+			int n = MultiByteToWideChar(CP_ACP, 0, src, -1, NULL, 0);
+			char* res;
+			if (len + 1 == n)
+			{
+				// all ascii characters, which the same as utf8 encoding string.
+				res = new char[n];
+				strncpy(res, src, n);
+			}
+			else
+			{
+				WCHAR* ws = new WCHAR[n];
+				MultiByteToWideChar(CP_ACP, 0, src, -1, ws, n-1);
+				ws[n-1] = 0;
+
+				n = WideCharToMultiByte(CP_UTF8, 0, ws, -1, NULL, 0, NULL, NULL);
+				res = new char[n];
+				WideCharToMultiByte(CP_UTF8, 0, ws, -1, res, n-1, NULL, NULL);
+				res[n-1] = 0;
+
+				delete[] ws;
+			}
+#else
+			// TODO may use iconv to do something.
+			int n = strlen(src);
+			char* res = new char[n];
+			strncpy(res, src, n);
+#endif //_WIN32
+
+			return res;
 		}
 	}
 }
