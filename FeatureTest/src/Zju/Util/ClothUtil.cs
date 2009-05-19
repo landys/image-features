@@ -11,7 +11,6 @@ namespace Zju.Util
         private static ImageMatcher imageMatcher;
 
         private static StreamWriter log;
-        private static String logfile = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\clothlog.txt";
 
         static ClothUtil()
         {
@@ -30,13 +29,13 @@ namespace Zju.Util
             {
                 if (log == null)
                 {
-                    if (File.Exists(logfile))
+                    if (File.Exists(SearchConstants.LogFileName))
                     {
-                        log = File.AppendText(logfile);
+                        log = File.AppendText(SearchConstants.LogFileName);
                     }
                     else
                     {
-                        log = File.CreateText(logfile);
+                        log = File.CreateText(SearchConstants.LogFileName);
                     }
                     log.AutoFlush = true;
                 }
@@ -300,10 +299,10 @@ namespace Zju.Util
             {
                 cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
             }
-            /*if (null == cloth.TamuraVector)
+            if (null == cloth.TamuraVector)
             {
                 cloth.TamuraVector = ImageMatcherInst.ExtractTamuraVector(cloth.Path, 6);
-            }*/
+            }
             if (null == cloth.MICannyVector)
             {
                 cloth.MICannyVector = ImageMatcherInst.ExtractMICannyVector(cloth.Path);

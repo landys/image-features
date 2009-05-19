@@ -1,7 +1,7 @@
 ﻿<Window x:Class="FeatureTest.HomeWin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="服装检索系统" Height="755" WindowStartupLocation="CenterScreen" Width="1030">
+    Title="服装检索系统" Height="828" WindowStartupLocation="CenterScreen" Width="1153">
     <DockPanel LastChildFill="True">
         <DockPanel.Resources>
             <!-- default border style -->
@@ -31,7 +31,7 @@
             </ToolBarTray>
         </Border>
         <Border DockPanel.Dock="Top"  HorizontalAlignment="Center">
-            <Canvas Name="cvsSearchArea" MinWidth="1000" Height="68" VerticalAlignment="Top">
+            <Canvas Name="cvsSearchArea" MinWidth="1000" Height="68" VerticalAlignment="Top" Width="1128">
                 <Label Canvas.Left="8.5" Canvas.Top="14" Height="28" Width="60.5">搜索范围:</Label>
                 <!--  ItemsSource="{Binding Source={StaticResource categoryItems}}" -->
                 <!-- MouseEnter ="cmbInput_MouseEnter" -->

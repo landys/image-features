@@ -5,9 +5,27 @@ using System.Text;
 
 namespace Zju.Util
 {
+    public sealed class AppConstants
+    {
+        public const string ConfPropsFileName = @"data\cloth.properties";
+
+        public const string DataPathKey = "dataPath";
+
+        public const string DataBaseFileKey = "dbFileName";
+
+        public const string LuvFileNameKey = "luvFileName";
+
+        public const string LogFileNameKey = "logFileName";
+
+        public static FileProperties ConfProps = new FileProperties(ConfPropsFileName);
+
+        public static string DataPath = ConfProps[DataPathKey];
+    }
+    
     public sealed class DbConstants
     {
-        public const String DataBaseFilePath = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\cloth.dbs";
+        // key in cloth.properties file.
+        public static string DataBaseFilePath = AppConstants.DataPath + AppConstants.ConfProps[AppConstants.DataBaseFileKey];
         public const int PagePoolSize = 48 * 1024 * 1024;
         public const int ComitLimit = 100000;
     }
@@ -29,7 +47,9 @@ namespace Zju.Util
 
         public static int[] IgnoreColors = { -1 };
 
-        public const string LuvFileName = @"E:\projects\DressSearch\codes\FeatureTest\Release\data\luv.dat";
+        public static string LuvFileName = AppConstants.DataPath + AppConstants.ConfProps[AppConstants.LuvFileNameKey];
+
+        public static string LogFileName = AppConstants.DataPath + AppConstants.ConfProps[AppConstants.LogFileNameKey];
 
         public const int MAX_IMPORT_THREADS = 100;
 

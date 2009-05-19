@@ -215,26 +215,49 @@ namespace Zju.Service
         }
     }
 
+    // TODO update not implemented yet.
     public class ImportArgus
     {
+        // for import, picture file names, can be absolute path or relative path
         public List<String> PicNames;
+        // for update, each Cloth should be already "Persistent".
+        public List<Cloth> Clothes;
+        // for bat commit, db commit until "Step" clothes inserted.
         public int Step;
+        // thread number to import/update clothes
         public int ThreadNum;
+        // callback functions
         public ShouldStop StopImport;
         public IntArgDelegate BefDel;
         public IntArgDelegate StepDel;
         public NoArgDelegate AfterDel;
+        // mark if import or update
+        public bool Update;
 
-        public ImportArgus(List<String> picNames, int step, int threadNum, ShouldStop stopImport,
-            IntArgDelegate befDel, IntArgDelegate stepDel, NoArgDelegate afterDel)
+        public ImportArgus(List<String> picNames, List<Cloth> clothes, int step, int threadNum, ShouldStop stopImport,
+            IntArgDelegate befDel, IntArgDelegate stepDel, NoArgDelegate afterDel, bool update)
         {
             this.PicNames = picNames;
+            this.Clothes = clothes;
             this.Step = step;
             this.ThreadNum = threadNum;
             this.StopImport = stopImport;
             this.BefDel = befDel;
             this.StepDel = stepDel;
             this.AfterDel = afterDel;
+            this.Update = update;
+        }
+
+        public ImportArgus(List<String> picNames, int step, int threadNum, ShouldStop stopImport,
+            IntArgDelegate befDel, IntArgDelegate stepDel, NoArgDelegate afterDel) 
+            : this(picNames, null, step, threadNum, stopImport, befDel, stepDel, afterDel, false)
+        {
+        }
+
+        public ImportArgus(List<Cloth> clothes, int step, int threadNum, ShouldStop stopImport,
+            IntArgDelegate befDel, IntArgDelegate stepDel, NoArgDelegate afterDel)
+            : this(null, clothes, step, threadNum, stopImport, befDel, stepDel, afterDel, true)
+        {
         }
     }
 
