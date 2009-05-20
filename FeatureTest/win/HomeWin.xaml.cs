@@ -591,7 +591,7 @@ namespace FeatureTest
             }
             else
             {
-                lblSearchResultInfo.Content = String.Format("搜索到{0}个布料, 共{1}页, 当前显示第{2}页:", searchedClothes.Count, totalPage, curPage + 1);
+                lblSearchResultInfo.Content = String.Format("找到的前{0}个结果, 共{1}页, 当前显示第{2}页:", searchedClothes.Count, totalPage, curPage + 1);
             }
             
             // update page pictures
