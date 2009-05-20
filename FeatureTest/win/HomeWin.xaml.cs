@@ -631,6 +631,7 @@ namespace FeatureTest
                 if (img.Source != null)
                 {
                     img.MouseDown += new MouseButtonEventHandler(resultImg_MouseDown);
+                    //img.MouseLeftButtonDown += new MouseButtonEventHandler(resultImg_MouseLeftButtonDown);
                 }
             }
 
@@ -640,21 +641,31 @@ namespace FeatureTest
         private void resultImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Image image = (Image)sender;
-            imgCurrentResult.Source = image.Source;
-            //imgCurrentResult.Name = reImageNamePrefix + image.Name;
+            Cloth cloth = searchedClothes[int.Parse(image.Name.Substring(imageNamePrefix.Length))];
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                imgCurrentResult.Source = image.Source;
+                //imgCurrentResult.Name = reImageNamePrefix + image.Name;
 
-            selectedCloth = searchedClothes[int.Parse(image.Name.Substring(imageNamePrefix.Length))];
+                selectedCloth = cloth;
 
-            txtModifyName.Text = selectedCloth.Name;
+                txtModifyName.Text = selectedCloth.Name;
 
-            txtModifyCategory.Text = ClothUtil.calcCategoryString(selectedCloth.Category);
+                txtModifyCategory.Text = ClothUtil.calcCategoryString(selectedCloth.Category);
 
-            txtModifyColorNum.Text = selectedCloth.ColorNum.ToString();
-            
-            //txtModifyName.IsEnabled = true;
-            btnResultDelete.IsEnabled = true;
-            //btnResultModify.IsEnabled = true;
+                txtModifyColorNum.Text = selectedCloth.ColorNum.ToString();
+
+                //txtModifyName.IsEnabled = true;
+                btnResultDelete.IsEnabled = true;
+                //btnResultModify.IsEnabled = true;
+            }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                imgKeyPic.Source = image.Source;
+                keyCloth = cloth;
+            }
         }
+
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
@@ -807,6 +818,13 @@ namespace FeatureTest
             }
 
             cmbCategoryInput.Text = values;
+        }
+
+        private void btnToolModifyPath_Click(object sender, RoutedEventArgs e)
+        {
+            clothLibService.ModifyClothPicPath(@"F:\pic_skindetect\zz200", @"D:\kricel\My Documents\Work\Demo\zz200");
+
+            MessageBox.Show("路径修改完毕.", "修改路径...");
         }
     }
 }

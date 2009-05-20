@@ -75,6 +75,31 @@ namespace Zju.Service
             return clothDao.FindAll();
         }
 
+
+        public void ModifyClothPicPath(string origPath, string modPath)
+        {
+            List<Cloth> clothes = clothDao.FindAll();
+            List<Cloth> lc = new List<Cloth>();
+            foreach (Cloth cloth in clothes)
+            {
+                string s = cloth.Path.Replace(origPath, modPath);
+                if (!cloth.Path.Equals(s))
+                {
+                    cloth.Path = s;
+                    lc.Add(cloth);
+                    if (lc.Count == 100)
+                    {
+                        clothDao.UpdatePathAll(lc);
+                        lc.Clear();
+                    }
+                }
+            }
+            if (lc.Count > 0)
+            {
+                clothDao.UpdatePathAll(lc);
+            }
+        }
+
         /// <summary>
         /// If use multithread, than gabor featrue will not be extracted.
         /// </summary>
@@ -206,6 +231,7 @@ namespace Zju.Service
                 this.isGabor = isGabor;
             }
         }
+
 
         #endregion
 

@@ -17,5 +17,7 @@ namespace Zju.Service
         List<Cloth> FindAll();
 
         void AsynImportClothPics(ImportArgus argus);
+
+        void ModifyClothPicPath(string origPath, string modPath);
     }
 }

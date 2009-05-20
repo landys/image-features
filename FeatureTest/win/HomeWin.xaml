@@ -28,6 +28,11 @@
                         <Image Source="/FeatureTest;component/res/about.png" Stretch="Fill" Width="16" />
                     </Button>
                 </ToolBar>
+                <ToolBar Band="1" BandIndex="3">
+                    <Button Name="btnToolModifyPath" ToolTip="修改图片路径(临时)" Click="btnToolModifyPath_Click">
+                        <Image Source="/FeatureTest;component/res/open.png" Stretch="Fill" Width="16" />
+                    </Button>
+                </ToolBar>
             </ToolBarTray>
         </Border>
         <Border DockPanel.Dock="Top"  HorizontalAlignment="Center">

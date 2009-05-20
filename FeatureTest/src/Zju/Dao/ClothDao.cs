@@ -212,6 +212,27 @@ namespace Zju.Dao
             }
         }
 
+        public void UpdatePathAll(List<Cloth> clothes)
+        {
+            Storage storage = DaoHelper.Instance.DbStorage;
+
+            storage.BeginThreadTransaction(TransactionMode.Exclusive);
+            try
+            {
+                foreach (Cloth cloth in clothes)
+                {
+                    cloth.Modify();
+                }
+
+                storage.EndThreadTransaction();
+            }
+            catch (Exception e)
+            {
+                // do some log
+                storage.RollbackThreadTransaction();
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -23,6 +23,13 @@ namespace Zju.Dao
         void Update(Cloth oldCloth, Cloth newCloth);
 
         /// <summary>
+        /// not infect the path index, so search by path will not be correct after calling this method
+        /// All Cloth object in clothes must be persitant, or error.
+        /// </summary>
+        /// <param name="clothes"></param>
+        void UpdatePathAll(List<Cloth> clothes);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="oid">Oid of a cloth.</param>
