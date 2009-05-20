@@ -140,7 +140,7 @@ namespace FeatureTest
             categoryItems = ViewHelper.NewCategoryItems;
             this.Resources.Add("categoryItems", categoryItems);
 
-            textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.Tamura};
+            textureATypes = new AlgorithmType[] { AlgorithmType.DaubechiesWavelet, AlgorithmType.Cooccurrence, AlgorithmType.Tamura, AlgorithmType.Gabor};
 
             colorATypes = new AlgorithmType[] { AlgorithmType.HSVAynsColor,
                 AlgorithmType.RGBColor, AlgorithmType.HSVColor, AlgorithmType.RGBSeparateColor, AlgorithmType.HLSColor };
@@ -510,12 +510,33 @@ namespace FeatureTest
                         }
                         break;
                     case AlgorithmType.Tamura:
+                        if (!AppConstants.IsTamura)
+                        {
+                            MessageBox.Show("Tamura算法在配置文件中被禁止.", "提取TamuraVector...");
+                            return null;
+                        }
                         if (null == keyCloth.TamuraVector)
                         {
                             keyCloth.TamuraVector = imageMatcher.ExtractTamuraVector(keyCloth.Path, 6);
                             if (keyCloth.TamuraVector == null)
                             {
                                 MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取TamuraVector...");
+                                return null;
+                            }
+                        }
+                        break;
+                    case AlgorithmType.Gabor:
+                        if (!AppConstants.IsGabor)
+                        {
+                            MessageBox.Show("Gabor算法在配置文件中被禁止.", "提取GaborVector...");
+                            return null;
+                        }
+                        if (null == keyCloth.GaborVector)
+                        {
+                            keyCloth.GaborVector = imageMatcher.ExtractGaborVector(keyCloth.Path);
+                            if (keyCloth.GaborVector == null)
+                            {
+                                MessageBox.Show("无法识别指定图片文件, 请检查该文件是否正确.", "提取GaborVector...");
                                 return null;
                             }
                         }

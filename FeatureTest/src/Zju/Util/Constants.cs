@@ -17,9 +17,17 @@ namespace Zju.Util
 
         public const string LogFileNameKey = "logFileName";
 
+        public const string IsGaborKey = "isGabor";
+
+        public const string IsTamurakey = "isTamura";
+
         public static FileProperties ConfProps = new FileProperties(ConfPropsFileName);
 
         public static string DataPath = ConfProps[DataPathKey];
+
+        public static bool IsGabor = "yes".Equals(ConfProps[IsGaborKey]);
+
+        public static bool IsTamura = "yes".Equals(ConfProps[IsTamurakey]);
     }
     
     public sealed class DbConstants

@@ -5,7 +5,7 @@
 #include <highgui.h>
 //#include <vcclr.h>
 #include "ImageMatcher.h"
-#include "GetFeature.h"
+#include "Daubechies.h"
 #include "../Tamura/extracttamura.h"
 //#include "../MICanny/extractMICanny.h"
 #include "MI.h"
@@ -45,13 +45,13 @@ namespace Zju
 		ImageMatcher::ImageMatcher() : isLuvInited(false)
 		{
 			pCoocc = new Cooccurrence();
-			//pGabor = new Gabor();
+			pGabor = new GaborFeature();
 		}
 
 		ImageMatcher::~ImageMatcher()
 		{
 			delete pCoocc;
-			//delete pGabor;
+			delete pGabor;
 		}
 
 		bool ImageMatcher::LuvInit(String^ luvFileName)
@@ -74,23 +74,12 @@ namespace Zju
 			isLuvInited = true;
 			return re;
 		}
-/*
-		bool ImageMatcher::GaborKernelInit(String^ gaborKernelFileName)
+
+		void ImageMatcher::GaborInit()
 		{
-			char* fileName = nullptr;
-			if (!to_CharStar(gaborKernelFileName, fileName))
-			{
-				// error, exception should be thrown out here.
-				return false;
-			}
-
-			bool re = luv_init(fileName);
-			delete[] fileName;
-
-			isLuvInited = true;
-			return re;
+			pGabor->initGaborFilter();
 		}
-*/
+
 		array<float>^ ImageMatcher::ExtractRGBSeparateColorVector(String^ imageFileName, int n, array<int>^ ignoreColors)
 		{
 			int n2 = n * 2;
@@ -555,35 +544,25 @@ namespace Zju
 
 		array<float>^ ImageMatcher::ExtractGaborVector(String^ imageFileName)
 		{
-			//return nullptr;
-			/*IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
+			IntPtr ip = Marshal::StringToHGlobalAnsi(imageFileName);
 			const char* fileName = static_cast<const char*>(ip.ToPointer());
 
-			Gabor::Pic_GaborWL* picwl = new Gabor::Pic_GaborWL;
-			int re = 0;
+			array<float>^ textureVector = nullptr;
 			try 
 			{
-				re = pGabor->OnWenLi(fileName, picwl);
+				if (pGabor->extractGaborFeature(fileName))
+				{
+					textureVector = to_array(pGabor->getVector(), 48);
+				}
 			}
 			catch (Exception^ e)
 			{
 				// TODO do some log
-				Marshal::FreeHGlobal(ip);
-				delete[] picwl;
-				return nullptr;
 			}
 
 			Marshal::FreeHGlobal(ip);
 
-			array<float>^ textureVector = nullptr;
-			if (re == 0)
-			{	// success
-				textureVector = to_array(picwl);
-			}
-			delete picwl;
-
-			return textureVector;*/
-			return nullptr;
+			return textureVector;
 		}
 
 		array<float>^ ImageMatcher::ExtractCooccurrenceVector(String^ imageFileName)

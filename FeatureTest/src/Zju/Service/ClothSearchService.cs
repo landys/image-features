@@ -58,6 +58,7 @@ namespace Zju.Service
             algoMap.Add(AlgorithmType.MICanny, SearchByPicMICanny);
             algoMap.Add(AlgorithmType.MIHu, SearchByPicMIHu);
             algoMap.Add(AlgorithmType.Fourier, SearchByPicFourier);
+            algoMap.Add(AlgorithmType.Gabor, SearchByPicGabor);
         }
 
         #region IClothSearchService Members
@@ -195,7 +196,7 @@ namespace Zju.Service
 
         public List<Cloth> SearchByPicGabor(Cloth keyCloth, int[] categories, int reSize)
         {
-            return new GaborSearcher(new PicParam<float>(keyCloth.GaborVector, keyCloth.ColorNum, categories), float.MaxValue, ClothUtil.CalcGaborDistance, clothDao, reSize)
+            return new GaborSearcher(new PicParam<float>(keyCloth.GaborVector, keyCloth.ColorNum, categories), float.MaxValue, ClothUtil.CalcManhattanDistance, clothDao, reSize)
                 .Search();
         }
 

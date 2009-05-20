@@ -16,6 +16,7 @@ namespace Zju.Util
         {
             imageMatcher = new ImageMatcher();
             imageMatcher.LuvInit(SearchConstants.LuvFileName);
+            imageMatcher.GaborInit();
         }
 
         public static ImageMatcher ImageMatcherInst
@@ -299,7 +300,7 @@ namespace Zju.Util
             {
                 cloth.CooccurrenceVector = ImageMatcherInst.ExtractCooccurrenceVector(cloth.Path);
             }
-            if (null == cloth.TamuraVector)
+            if (AppConstants.IsTamura && null == cloth.TamuraVector)
             {
                 cloth.TamuraVector = ImageMatcherInst.ExtractTamuraVector(cloth.Path, 6);
             }
@@ -318,12 +319,10 @@ namespace Zju.Util
                 cloth.FourierVector = ImageMatcherInst.ExtractFourierVector(cloth.Path, 20);
             }
 
-            //if (isGabor && null == cloth.GaborVector)
-            //{
-            //    cloth.GaborVector = ImageMatcherInst.ExtractGaborVector(cloth.Path);
-            //}
-
-            
+            if (AppConstants.IsGabor && null == cloth.GaborVector)
+            {
+                cloth.GaborVector = ImageMatcherInst.ExtractGaborVector(cloth.Path);
+            }
         }
 
         /// <summary>

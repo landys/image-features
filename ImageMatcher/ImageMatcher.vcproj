@@ -195,11 +195,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Daubechies.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Fourier.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\GetFeature.cpp"
+				RelativePath=".\Gabor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GaborFeature.cpp"
 				>
 			</File>
 			<File
@@ -241,11 +249,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Daubechies.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Fourier.h"
 				>
 			</File>
 			<File
-				RelativePath=".\GetFeature.h"
+				RelativePath=".\Gabor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GaborFeature.h"
 				>
 			</File>
 			<File

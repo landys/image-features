@@ -5,6 +5,7 @@
 //#include <string>
 //#include "Gabor.h"
 #include "Cooccurrence.h"
+#include "GaborFeature.h"
 
 using namespace System;
 
@@ -40,9 +41,11 @@ namespace Zju
 			// Return null if failed.
 			bool LuvInit(String^ luvFileName);
 
+			void GaborInit();
+
 			//bool GaborKernelInit(String^ gaborKernelFileName);
 
-			// the size of dimensions is 64
+			// the size of dimensions is 48
 			array<float>^ ExtractGaborVector(String^ imageFileName);
 
 			// the size of dimensions is 200
@@ -68,6 +71,8 @@ namespace Zju
 			bool isLuvInited;
 
 			//Gabor* pGabor;
+
+			GaborFeature* pGabor;
 
 			Cooccurrence* pCoocc;
 		private:

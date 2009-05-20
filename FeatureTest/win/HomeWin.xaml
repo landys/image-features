@@ -67,6 +67,7 @@
                     <Label>DaubechiesWavelet</Label>
                     <Label>Cooccurrence</Label>
                     <Label>Tamura</Label>
+                    <Label>Gabor</Label>
                 </ComboBox>
                 
                 <CheckBox Canvas.Left="413" Canvas.Top="19" Height="16" Name="cbColorAlgorithm" Width="72">颜色算法:</CheckBox>

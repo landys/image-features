@@ -1,10 +1,8 @@
 #pragma once
-#include "Gabor.h"
-#include <Windows.h>
-#include <iostream>
 #include <string>
-#include <sstream>
-#include <io.h>
+#include "highgui.h"
+#include "cv.h"
+#include "cxcore.h"
 using namespace std;
 
 typedef struct  
@@ -13,13 +11,13 @@ typedef struct
 	CvMat* imagmat;
 }GABOR_FILTER;
 
-class CGetTexture
+class GaborFeature
 {
 public:
-	CGetTexture(void);
+	GaborFeature(void);
 
 public:
-	~CGetTexture(void);
+	~GaborFeature(void);
 private:
 	float			m_fSigma;      
 	long			m_lScale[3];		//尺度数组
@@ -28,13 +26,15 @@ private:
 	double			m_dVector[48];      //特征值向量
 	GABOR_FILTER	m_FilterArray[24];   //滤波器组
 	bool			m_bCreateFilter;
-public:
+private:
 	bool			CreateFilterArray(); //生成滤波器组
 	bool			CreateImageFeatureVec(IplImage* image);
 	double			GetImgEx(IplImage* image);  //计算图像均值
 	double			GetImgVa(IplImage* image);  //计算图像方差
-	double*			GetVector();   //获取特征值向量
-	void			CreateVecFile(string imgfilepath, string vecfilename);
+	
+	//void			CreateVecFile(string imgfilepath, string vecfilename);
+public:
 	void initGaborFilter();
 	int extractGaborFeature(const char* imgfile);
+	double*	getVector();   //获取特征值向量
 };

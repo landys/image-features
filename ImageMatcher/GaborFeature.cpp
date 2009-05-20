@@ -1,6 +1,10 @@
-#include "GetTexture.h"
+#include "Stdafx.h"
+#include "GaborFeature.h"
+#include "Gabor.h"
+#include <sstream>
+#include <io.h>
 
-CGetTexture::CGetTexture(void)
+GaborFeature::GaborFeature(void)
 {
 	m_fSigma	= CV_PI ;      
 	m_lScale[0] = 2;		
@@ -11,11 +15,11 @@ CGetTexture::CGetTexture(void)
 	m_bCreateFilter =false;
 }
 
-CGetTexture::~CGetTexture(void)
+GaborFeature::~GaborFeature(void)
 {
 }
 
-bool CGetTexture::CreateFilterArray()
+bool GaborFeature::CreateFilterArray()
 {
 	m_bCreateFilter = false;
 	for (int i=0; i<3; i++)
@@ -30,7 +34,7 @@ bool CGetTexture::CreateFilterArray()
 	return true;
 }
 
-bool CGetTexture::CreateImageFeatureVec(IplImage* src)
+bool GaborFeature::CreateImageFeatureVec(IplImage* src)
 {
 	//cvNamedWindow("test", 1);
 	if (!m_bCreateFilter)
@@ -46,8 +50,8 @@ bool CGetTexture::CreateImageFeatureVec(IplImage* src)
 			//CGabor gabor(m_fSigma, m_lScale[i], j*CV_PI/8);
 			CGabor::ConvImage(src, dst, MAG, m_FilterArray[i*8+j].realmat, m_FilterArray[i*8+j].imagmat);
 
-			sprintf(filename, "E:\\pic_skindetect\\clothtest\\gabortest\\%d.bmp", i*8+j);
-			cvSaveImage(filename, dst);
+			//sprintf(filename, "E:\\pic_skindetect\\clothtest\\gabortest\\%d.bmp", i*8+j);
+			//cvSaveImage(filename, dst);
 			//cvShowImage("test", dst);
 			//Sleep(100);
 			m_dVector[(i*8+j)*2] = GetImgEx(dst);
@@ -58,7 +62,7 @@ bool CGetTexture::CreateImageFeatureVec(IplImage* src)
 	return true;
 }
 
-double CGetTexture::GetImgEx(IplImage* src)
+double GaborFeature::GetImgEx(IplImage* src)
 {
 	double ex = 0;
 	for (int i = 0; i < src->width; i++)
@@ -71,7 +75,7 @@ double CGetTexture::GetImgEx(IplImage* src)
 	return ex/(src->width * src->height);
 }
 
-double CGetTexture::GetImgVa(IplImage* src)
+double GaborFeature::GetImgVa(IplImage* src)
 {
 	double ex = GetImgEx(src);
 	double va = 0;
@@ -85,12 +89,12 @@ double CGetTexture::GetImgVa(IplImage* src)
 	return sqrt(va/(src->width * src->height));
 }
 
-double*	CGetTexture::GetVector()
+double*	GaborFeature::getVector()
 {
 	return m_dVector;
 }
 
-void CGetTexture::CreateVecFile(string inFilepath, string vecfilename)
+/*void GaborFeature::CreateVecFile(string inFilepath, string vecfilename)
 {
 	FILE* fp = fopen(vecfilename.c_str(), "w+");
 	struct _finddata_t c_file;
@@ -127,9 +131,9 @@ void CGetTexture::CreateVecFile(string inFilepath, string vecfilename)
 
 
 	fclose(fp);
-}
+}*/
 
-void CGetTexture::initGaborFilter()
+void GaborFeature::initGaborFilter()
 {
 	if (!m_bCreateFilter)
 	{
@@ -137,7 +141,7 @@ void CGetTexture::initGaborFilter()
 	}
 }
 
-int CGetTexture::extractGaborFeature(const char* imgfile)
+int GaborFeature::extractGaborFeature(const char* imgfile)
 {
 	IplImage* img = cvLoadImage(imgfile, CV_LOAD_IMAGE_GRAYSCALE);
 	if (!img)
