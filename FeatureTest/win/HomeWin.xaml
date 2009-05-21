@@ -67,7 +67,7 @@
                     <Label>DaubechiesWavelet</Label>
                     <Label>Cooccurrence</Label>
                     <Label>Tamura</Label>
-                    <Label>Gabor</Label>
+                    <!--<Label>Gabor</Label>-->
                 </ComboBox>
                 
                 <CheckBox Canvas.Left="413" Canvas.Top="19" Height="16" Name="cbColorAlgorithm" Width="72">颜色算法:</CheckBox>
@@ -122,7 +122,8 @@
                         <TextBox Canvas.Left="56" Canvas.Top="47" Name="txtModifyCategory" Width="120" IsReadOnly="True"/>
                         <Label Canvas.Left="5" Canvas.Top="75" Width="48">颜色数:</Label>
                         <TextBox Canvas.Left="56" Canvas.Top="79" Name="txtModifyColorNum" Width="120" IsReadOnly="True"/>
-                        <Button Canvas.Left="70" Canvas.Top="140" Height="23" Name="btnResultDelete" Width="44" Click="btnResultDelete_Click" IsEnabled="False">删除</Button>
+                        <Button Canvas.Left="20" Canvas.Top="140" Height="23" Name="btnResultClean" Width="44" Click="btnResultClean_Click" IsEnabled="False" ToolTip="清除图片详细信息，不影响库中图片索引">清除</Button>
+                        <Button Canvas.Left="73" Canvas.Top="140" Height="23" Name="btnResultDelete" Width="44" Click="btnResultDelete_Click" IsEnabled="False" ToolTip="删除库中该图片索引">删除</Button>
                         <Button Canvas.Left="124" Canvas.Top="140" Height="23" Name="btnResultModify" Width="44" Click="btnResultModify_Click" IsEnabled="False">修改</Button>
                     </Canvas>
                 </Border>

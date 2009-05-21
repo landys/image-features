@@ -678,6 +678,7 @@ namespace FeatureTest
 
                 //txtModifyName.IsEnabled = true;
                 btnResultDelete.IsEnabled = true;
+                btnResultClean.IsEnabled = true;
                 //btnResultModify.IsEnabled = true;
             }
             else if (e.RightButton == MouseButtonState.Pressed)
@@ -713,11 +714,29 @@ namespace FeatureTest
 
             btnResultDelete.IsEnabled = false;
             btnResultModify.IsEnabled = false;
+            btnResultClean.IsEnabled = false;
 
             if (isIn)
             {   // the removed selected cloth is in the searched clothes
                 updatePicResults();
             }
+        }
+
+        private void btnResultClean_Click(object sender, RoutedEventArgs e)
+        {
+            imgCurrentResult.Source = null;
+
+            txtModifyName.Text = "";
+            //txtModifyName.IsEnabled = false;
+
+            txtModifyCategory.Text = "";
+            //txtModifyPattern.IsEnabled = false;
+
+            txtModifyColorNum.Text = "";
+
+            btnResultDelete.IsEnabled = false;
+            btnResultModify.IsEnabled = false;
+            btnResultClean.IsEnabled = false;
         }
 
         private void btnResultModify_Click(object sender, RoutedEventArgs e)
