@@ -98,6 +98,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="win\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="win\ProgressWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +155,9 @@
     </Compile>
     <Compile Include="win\IndeterminateProgressWin.xaml.cs">
       <DependentUpon>IndeterminateProgressWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="win\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="win\ProgressWin.xaml.cs">
       <DependentUpon>ProgressWin.xaml</DependentUpon>
